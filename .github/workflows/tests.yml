@@ -1,0 +1,27 @@
+name: tests
+
+# CPU only; no FPGA, card, Vitis install or pretrained weights needed. NVIDIA's code is cloned at the pinned commit,
+# the tests run on the random stand-in of model 1. The kernel C simulation needs the Vitis HLS headers (ap_int.h);
+# without them those tests are reported as skipped.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r requirements.txt
+      - run: scripts/setup_reference.sh
+      - run: python model/make_random_checkpoint.py
+      - run: pytest -v -rs
