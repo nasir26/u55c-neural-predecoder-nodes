@@ -20,12 +20,14 @@ measurements are not yet done; no FPGA number is reported here until it has been
 | INT8 model, fast path against its reference integer path; weight, multiplier and table ranges | bit identical; all invariants hold | `tests/test_qmodel.py` |
 | INT8 network through NVIDIA's evaluation, d = 9, 65,536 shots per basis, 2,048 calibration windows | 154 logical errors after the pre-decoder, 154 with PyMatching alone on the same shots (X 88 against 70, Z 66 against 84); standard error about 1.3e-4 per rate | `results/ler/int8_d9_65536.json` |
 | HLS kernel (C simulation) against the INT8 model | bit identical at d = 9 (X and Z basis) and d = 11 | `tests/test_kernel_csim.py` |
+| FP32 network through NVIDIA's evaluation, d = 13, 13 rounds, 32,768 shots per basis | 22 logical errors after the pre-decoder, 9 with PyMatching alone on the same shots (X 14 against 7, Z 8 against 2); contrary to NVIDIA's reported trend, the configuration at d = 13 is being checked | `results/ler/fp32_d13_32768.json` |
 | Same network on the host CPU, PyTorch float32, 256 threads, d = 9 | 1,359 windows per second at batch 16; 47 per second at batch 1 | `bench/cpu_torch_d9.json` |
 
 At d = 9 the effect of the pre-decoder on the logical error rate is within the statistical error, for the FP16 and
 the INT8 network alike (the two runs drew different syndrome samples). NVIDIA reports larger gains at larger
-distances, which are evaluated next (d = 13), together with the agreement of INT8 and FP16 decisions on the same
-windows.
+distances; the first run at d = 13 shows the opposite (table above) and is being checked against NVIDIA's own
+inference configuration before any conclusion. The agreement of INT8 and FP16 decisions on the same windows is
+measured next.
 
 ## Layout
 
