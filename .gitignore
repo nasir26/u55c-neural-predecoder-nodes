@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+runs/
+third_party/
+*.safetensors
+.hf_token
+*.xclbin
+*.xo
+*.xsa
+hls/synth/predecoder_hls/
+hls/synth/*.log
+_x/
+.Xil/
