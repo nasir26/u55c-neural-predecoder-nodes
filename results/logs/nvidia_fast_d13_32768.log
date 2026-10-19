@@ -1,0 +1,26 @@
+Loading model for task: inference
+Loading model from SafeTensors: <RUNS>/models/nvidia/ising_decoder_surface_code_1_fast_r9_v1.0.77_fp16.safetensors
+  model_id: 1 (from SafeTensors metadata)
+  receptive_field: 9
+  dtype: fp16
+  parameters: 912,772
+[Inference] Starting Stim evaluation (may take a bit). Shots per basis: 32,768 (sharded across 1 GPU(s)); latency timing subset: 0 single-shot decodes.
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=13, n_rounds=13, num_samples=32768, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+[DEM Timing] build=0.07s decode=1.92s (basis=X, batches=16)
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=13, n_rounds=13, num_samples=32768, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=Z, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+[DEM Timing] build=0.09s decode=1.92s (basis=Z, batches=16)
+
+[Inference] d=13, n_rounds=13, noise_model=25p
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+                                           No pre-decoder  After pre-decoder
+  PyMatching latency - X basis (µs/round):            nan                nan
+  PyMatching latency - Z basis (µs/round):            nan                nan
+  PyMatching latency - Avg (µs/round):                nan                nan
+  LER - X basis:                                 0.000092           0.000244
+  LER - Z basis:                                 0.000397           0.000122
+  LER - Avg:                                     0.000244           0.000183
+  PyMatching speedup (Avg X/Z):                       nanx

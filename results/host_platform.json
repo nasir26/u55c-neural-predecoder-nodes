@@ -1,0 +1,12 @@
+{
+ "HostCpu": "AMD EPYC 7742",
+ "HostThreads": "256",
+ "HostSockets": "2",
+ "HostMemGiB": "504",
+ "XrtVersion": "2.16.204",
+ "StimVersion": "1.16.0",
+ "PymatchingVersion": "2.4.0",
+ "TorchVersion": "2.14.1",
+ "NvidiaCommit": "33acb15",
+ "recorded": "2026-10-19"
+}

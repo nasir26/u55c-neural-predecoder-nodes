@@ -1,0 +1,43 @@
+{
+ "variant": "fp32",
+ "d": 13,
+ "t": 13,
+ "p": 0.006,
+ "shots_per_basis": 262144,
+ "checkpoint": "ising_decoder_surface_code_1_accurate_r13_v1.0.86_fp16.safetensors",
+ "metadata": {
+  "num_filters": "[128, 128, 128, 128, 128, 4]",
+  "kernel_size": "[3, 3, 3, 3, 3, 3]",
+  "model_id": "4",
+  "quant_format": "fp16",
+  "receptive_field": "13",
+  "model_version": "predecoder_memory_v1"
+ },
+ "start": "2026-10-19 16:18:26",
+ "seconds": 2142.628862142563,
+ "end": "2026-10-19 16:54:09",
+ "result": {
+  "X": {
+   "num shots": 262144.0,
+   "logical errors": 3338.0,
+   "pymatch flips": 5740.0,
+   "logical error ratio (mean)": 0.01273345947265625,
+   "logical error ratio (standard error)": 0.00021898806871733668,
+   "logical error ratio (pymatch mean)": 0.0218963623046875,
+   "logical error ratio (pymatch standard error)": 0.0002858304291087965,
+   "pymatch latency (baseline \u00b5s/round)": NaN,
+   "pymatch latency (after predecoder \u00b5s/round)": NaN
+  },
+  "Z": {
+   "num shots": 262144.0,
+   "logical errors": 3409.0,
+   "pymatch flips": 5837.0,
+   "logical error ratio (mean)": 0.013004302978515625,
+   "logical error ratio (standard error)": 0.00022127441859919248,
+   "logical error ratio (pymatch mean)": 0.022266387939453125,
+   "logical error ratio (pymatch standard error)": 0.0002881809026977383,
+   "pymatch latency (baseline \u00b5s/round)": NaN,
+   "pymatch latency (after predecoder \u00b5s/round)": NaN
+  }
+ }
+}

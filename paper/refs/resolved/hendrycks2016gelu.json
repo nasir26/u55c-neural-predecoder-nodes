@@ -1,0 +1,19 @@
+{
+ "source": "arxiv",
+ "arxiv": "1606.08415",
+ "title": "Gaussian Error Linear Units (GELUs)",
+ "year": 2016,
+ "authors": [
+  [
+   "Hendrycks",
+   "Dan"
+  ],
+  [
+   "Gimpel",
+   "Kevin"
+  ]
+ ],
+ "doi": null,
+ "journal_ref": null,
+ "url": "https://arxiv.org/abs/1606.08415"
+}

@@ -1,0 +1,438 @@
+== [2026-10-19T16:13:09+05:30] v++ compile at 300 MHz ==
+Option Map File Used: '/tools/Xilinx/Vitis/2023.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2023.2 (64-bit)
+  **** SW Build 4026344 on 2023-10-11-15:42:10
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/predecoder
+	Log files: <WS>/neural_decoder/four_card_decoder/build/hw/_x/logs/predecoder
+Running Dispatch Server on port: 36695
+INFO: [v++ 60-1548] Creating build summary session with primary output <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xo.compile_summary, at Mon Oct 19 16:13:13 2026
+INFO: [v++ 60-1315] Creating rulecheck session with output '<WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/predecoder/v++_compile_predecoder_guidance.html', at Mon Oct 19 16:13:13 2026
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/hw/hw.xsa'
+INFO: [v++ 74-78] Compiler Version string: 2023.2
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u55c_gen3x16_xdma_3_202210_1
+WARNING: [v++ 60-889] User-specified kernel frequency for ID 0 is the same as the default frequency 300 MHz, so it will be ignored
+INFO: [v++ 60-242] Creating kernel: 'predecoder'
+
+===>The following messages were generated while  performing high-level synthesis for kernel: predecoder Log file: <WS>/neural_decoder/four_card_decoder/build/hw/_x/predecoder/predecoder/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'LOAD_WEIGHTS'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'LOAD_WEIGHTS'
+INFO: [v++ 204-61] Pipelining loop 'LOAD_PARAMS'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 75, loop 'LOAD_PARAMS'
+INFO: [v++ 204-61] Pipelining loop 'READ_X'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'READ_X'
+INFO: [v++ 204-61] Pipelining loop 'LOAD_EPI'.
+WARNING: [v++ 200-885] The II Violation in module 'p_anonymous_namespace_layer_Pipeline_LOAD_EPI' (loop 'LOAD_EPI'): Unable to schedule 'load' operation 32 bit ('P_load', <WS>/neural_decoder/four_card_decoder/hls/predecoder.cpp:72) on array 'P' due to limited memory ports (II = 1). Please consider using a memory core with more ports or partitioning the array 'P'.
+Resolution: For help on HLS 200-885 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1448-hls-guidance&resourceid=200-885.html
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 2, Depth = 3, loop 'LOAD_EPI'
+INFO: [v++ 204-61] Pipelining loop 'LOAD_LUT'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'LOAD_LUT'
+INFO: [v++ 204-61] Pipelining loop 'ZERO'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 2, loop 'ZERO'
+INFO: [v++ 204-61] Pipelining loop 'LOAD_W'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 6, loop 'LOAD_W'
+INFO: [v++ 204-61] Pipelining loop 'SITES'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 14, loop 'SITES'
+INFO: [v++ 204-61] Pipelining loop 'EPILOGUE'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 8, loop 'EPILOGUE'
+INFO: [v++ 204-61] Pipelining loop 'WRITE_BITS'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'WRITE_BITS'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 370.51 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/predecoder/system_estimate_predecoder.xtxt
+INFO: [v++ 60-586] Created predecoder.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 3m 16s
+INFO: [v++ 60-1653] Closing dispatch client.
+== [2026-10-19T16:16:27+05:30] v++ link ==
+Option Map File Used: '/tools/Xilinx/Vitis/2023.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2023.2 (64-bit)
+  **** SW Build 4026344 on 2023-10-11-15:42:10
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link
+	Log files: <WS>/neural_decoder/four_card_decoder/build/hw/_x/logs/link
+Running Dispatch Server on port: 38181
+INFO: [v++ 60-1548] Creating build summary session with primary output <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin.link_summary, at Mon Oct 19 16:16:31 2026
+INFO: [v++ 60-1315] Creating rulecheck session with output '<WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link/v++_link_predecoder_guidance.html', at Mon Oct 19 16:16:31 2026
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/hw/hw.xsa'
+INFO: [v++ 74-78] Compiler Version string: 2023.2
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u55c_gen3x16_xdma_3_202210_1
+WARNING: [v++ 60-889] User-specified kernel frequency for ID 0 is the same as the default frequency 300 MHz, so it will be ignored
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [16:16:36] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xo --config <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u55c_gen3x16_xdma_3_202210_1/xilinx_u55c_gen3x16_xdma_3_202210_1.xpfm --target hw --output_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int --temp_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [16:16:38] build_xd_ip_db started: /tools/Xilinx/Vitis/2023.2/bin/build_xd_ip_db -ip_search 0  -sds-pf <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/hw.hpfm -clkid 0 -ip <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/iprepo/xilinx_com_hls_predecoder_1_0,predecoder -o <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [16:16:43] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 458.445 ; gain = 0.000 ; free physical = 383863 ; free virtual = 984945
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [16:16:43] cfgen started: /tools/Xilinx/Vitis/2023.2/bin/cfgen  -nk predecoder:2:predecoder_1,predecoder_2 -slr predecoder_1:SLR1 -slr predecoder_2:SLR2 -sp predecoder_1.wmem:HBM[0] -sp predecoder_1.params:HBM[0] -sp predecoder_1.x_in:HBM[1] -sp predecoder_1.bits_out:HBM[1] -sp predecoder_2.wmem:HBM[2] -sp predecoder_2.params:HBM[2] -sp predecoder_2.x_in:HBM[3] -sp predecoder_2.bits_out:HBM[3] -dpa_mem_offload false -dmclkid 0 -r <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: predecoder, num: 2  {predecoder_1 predecoder_2}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: predecoder_1, k_port: wmem, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: predecoder_1, k_port: params, sptag: HBM[0]
+INFO: [CFGEN 83-0]   kernel: predecoder_1, k_port: x_in, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: predecoder_1, k_port: bits_out, sptag: HBM[1]
+INFO: [CFGEN 83-0]   kernel: predecoder_2, k_port: wmem, sptag: HBM[2]
+INFO: [CFGEN 83-0]   kernel: predecoder_2, k_port: params, sptag: HBM[2]
+INFO: [CFGEN 83-0]   kernel: predecoder_2, k_port: x_in, sptag: HBM[3]
+INFO: [CFGEN 83-0]   kernel: predecoder_2, k_port: bits_out, sptag: HBM[3]
+INFO: [CFGEN 83-0] SLR Specs: 
+INFO: [CFGEN 83-0]   instance: predecoder_1, SLR: SLR1
+INFO: [CFGEN 83-0]   instance: predecoder_2, SLR: SLR2
+INFO: [SYSTEM_LINK 82-37] [16:16:52] cfgen finished successfully
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 458.445 ; gain = 0.000 ; free physical = 383862 ; free virtual = 984944
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [16:16:52] cf2bd started: /tools/Xilinx/Vitis/2023.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.xsd --temp_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link --output_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int --target_bd ulp.bd
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -bd ulp.bd -dn dr -dp <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [16:16:57] cf2bd finished successfully
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 458.445 ; gain = 0.000 ; free physical = 383852 ; free virtual = 984939
+INFO: [v++ 60-1441] [16:16:57] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 384040 ; free virtual = 985022
+INFO: [v++ 60-1443] [16:16:57] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/sdsl.dat -rtd <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/cf2sw.rtd -nofilter <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/cf2sw_full.rtd -xclbin <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/xclbin_orig.xml -o <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [v++ 60-1441] [16:17:04] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 384039 ; free virtual = 985023
+INFO: [v++ 60-1443] [16:17:04] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [v++ 60-1441] [16:17:04] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.35 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 384017 ; free virtual = 985000
+INFO: [v++ 60-1443] [16:17:04] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f xilinx_u55c_gen3x16_xdma_3_202210_1 --kernel_frequency 300 --remote_ip_cache <WS>/neural_decoder/four_card_decoder/build/hw/.ipcache --output_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int --log_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/logs/link --report_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link --config <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/vplConfig.ini -k <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir <WS>/neural_decoder/four_card_decoder/build/hw/_x/link --no-info --iprepo <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/xo/ip_repo/xilinx_com_hls_predecoder_1_0 --messageDb <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link/vpl.pb <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+
+****** vpl v2023.2 (64-bit)
+  **** SW Build 4026344 on 2023-10-11-15:42:10
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/kernel_info.dat'.
+INFO: [VPL 74-78] Compiler Version string: 2023.2
+INFO: [VPL 60-423]   Target device: xilinx_u55c_gen3x16_xdma_3_202210_1
+WARNING: [VPL 60-889] User-specified kernel frequency for ID 0 is the same as the default frequency 300 MHz, so it will be ignored
+INFO: [VPL 60-1032] Extracting hardware platform to <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/vivado/vpl/.local/hw_platform
+[16:17:16] Run vpl: Step create_project: Started
+Creating Vivado project.
+[16:17:24] Run vpl: Step create_project: Completed
+[16:17:24] Run vpl: Step create_bd: Started
+[16:17:54] Run vpl: Step create_bd: Completed
+[16:17:54] Run vpl: Step update_bd: Started
+[16:17:54] Run vpl: Step update_bd: Completed
+[16:17:54] Run vpl: Step generate_target: Started
+[16:19:11] Run vpl: Step generate_target: RUNNING...
+[16:19:18] Run vpl: Step generate_target: Completed
+[16:19:18] Run vpl: Step config_hw_runs: Started
+[16:20:34] Run vpl: Step config_hw_runs: RUNNING...
+[16:20:48] Run vpl: Step config_hw_runs: Completed
+[16:20:48] Run vpl: Step synth: Started
+[16:21:19] Block-level synthesis in progress, 0 of 155 jobs complete, 8 jobs running.
+[16:21:49] Block-level synthesis in progress, 0 of 155 jobs complete, 8 jobs running.
+[16:22:20] Block-level synthesis in progress, 5 of 155 jobs complete, 5 jobs running.
+[16:22:50] Block-level synthesis in progress, 7 of 155 jobs complete, 7 jobs running.
+[16:23:20] Block-level synthesis in progress, 9 of 155 jobs complete, 7 jobs running.
+[16:23:50] Block-level synthesis in progress, 16 of 155 jobs complete, 6 jobs running.
+[16:24:20] Block-level synthesis in progress, 17 of 155 jobs complete, 8 jobs running.
+[16:24:51] Block-level synthesis in progress, 20 of 155 jobs complete, 8 jobs running.
+[16:25:21] Block-level synthesis in progress, 24 of 155 jobs complete, 7 jobs running.
+[16:25:51] Block-level synthesis in progress, 28 of 155 jobs complete, 8 jobs running.
+[16:26:21] Block-level synthesis in progress, 30 of 155 jobs complete, 8 jobs running.
+[16:26:52] Block-level synthesis in progress, 33 of 155 jobs complete, 7 jobs running.
+[16:27:22] Block-level synthesis in progress, 36 of 155 jobs complete, 8 jobs running.
+[16:27:53] Block-level synthesis in progress, 38 of 155 jobs complete, 6 jobs running.
+[16:28:23] Block-level synthesis in progress, 42 of 155 jobs complete, 6 jobs running.
+[16:28:54] Block-level synthesis in progress, 43 of 155 jobs complete, 7 jobs running.
+[16:29:24] Block-level synthesis in progress, 48 of 155 jobs complete, 7 jobs running.
+[16:29:54] Block-level synthesis in progress, 57 of 155 jobs complete, 4 jobs running.
+[16:30:25] Block-level synthesis in progress, 65 of 155 jobs complete, 5 jobs running.
+[16:30:55] Block-level synthesis in progress, 68 of 155 jobs complete, 8 jobs running.
+[16:31:25] Block-level synthesis in progress, 70 of 155 jobs complete, 7 jobs running.
+[16:31:56] Block-level synthesis in progress, 72 of 155 jobs complete, 8 jobs running.
+[16:32:26] Block-level synthesis in progress, 75 of 155 jobs complete, 8 jobs running.
+[16:32:57] Block-level synthesis in progress, 81 of 155 jobs complete, 6 jobs running.
+[16:33:27] Block-level synthesis in progress, 84 of 155 jobs complete, 6 jobs running.
+[16:33:58] Block-level synthesis in progress, 85 of 155 jobs complete, 7 jobs running.
+[16:34:28] Block-level synthesis in progress, 89 of 155 jobs complete, 5 jobs running.
+[16:34:59] Block-level synthesis in progress, 91 of 155 jobs complete, 7 jobs running.
+[16:35:29] Block-level synthesis in progress, 96 of 155 jobs complete, 6 jobs running.
+[16:35:59] Block-level synthesis in progress, 105 of 155 jobs complete, 3 jobs running.
+[16:36:30] Block-level synthesis in progress, 115 of 155 jobs complete, 4 jobs running.
+[16:37:00] Block-level synthesis in progress, 117 of 155 jobs complete, 8 jobs running.
+[16:37:31] Block-level synthesis in progress, 117 of 155 jobs complete, 8 jobs running.
+[16:38:01] Block-level synthesis in progress, 122 of 155 jobs complete, 6 jobs running.
+[16:38:32] Block-level synthesis in progress, 126 of 155 jobs complete, 7 jobs running.
+[16:39:02] Block-level synthesis in progress, 131 of 155 jobs complete, 6 jobs running.
+[16:39:33] Block-level synthesis in progress, 133 of 155 jobs complete, 8 jobs running.
+[16:40:03] Block-level synthesis in progress, 136 of 155 jobs complete, 7 jobs running.
+[16:40:34] Block-level synthesis in progress, 143 of 155 jobs complete, 5 jobs running.
+[16:41:05] Block-level synthesis in progress, 149 of 155 jobs complete, 4 jobs running.
+[16:41:35] Block-level synthesis in progress, 149 of 155 jobs complete, 4 jobs running.
+[16:42:06] Block-level synthesis in progress, 152 of 155 jobs complete, 2 jobs running.
+[16:42:36] Block-level synthesis in progress, 153 of 155 jobs complete, 1 job running.
+[16:43:07] Block-level synthesis in progress, 154 of 155 jobs complete, 0 jobs running.
+[16:43:37] Block-level synthesis in progress, 154 of 155 jobs complete, 1 job running.
+[16:44:08] Block-level synthesis in progress, 155 of 155 jobs complete, 0 jobs running.
+[16:44:38] Top-level synthesis in progress.
+[16:45:09] Top-level synthesis in progress.
+[16:45:40] Top-level synthesis in progress.
+[16:46:01] Run vpl: Step synth: Completed
+[16:46:01] Run vpl: Step impl: Started
+[17:01:51] Finished 2nd of 6 tasks (FPGA linking synthesized kernels to platform). Elapsed time: 00h 44m 45s 
+
+[17:01:51] Starting logic optimization..
+[17:02:22] Phase 1 Initialization
+[17:02:22] Phase 1.1 Core Generation And Design Setup
+[17:02:53] Phase 1.2 Setup Constraints And Sort Netlist
+[17:03:23] Phase 2 Timer Update And Timing Data Collection
+[17:03:23] Phase 2.1 Timer Update
+[17:03:54] Phase 2.2 Timing Data Collection
+[17:03:54] Phase 3 Retarget
+[17:04:25] Phase 4 Constant propagation
+[17:05:26] Phase 5 Sweep
+[17:06:58] Phase 6 BUFG optimization
+[17:07:29] Phase 7 Shift Register Optimization
+[17:07:59] Phase 8 Post Processing Netlist
+[17:08:30] Phase 9 Finalization
+[17:08:30] Phase 9.1 Finalizing Design Cores and Updating Shapes
+[17:09:01] Phase 9.2 Verifying Netlist Connectivity
+[17:10:03] Finished 3rd of 6 tasks (FPGA logic optimization). Elapsed time: 00h 08m 11s 
+
+[17:10:03] Starting logic placement..
+[17:10:34] Phase 1 Placer Initialization
+[17:10:34] Phase 1.1 Placer Initialization Netlist Sorting
+[17:14:40] Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+[17:16:12] Phase 1.3 Build Placer Netlist Model
+[17:20:18] Phase 1.4 Constrain Clocks/Macros
+[17:20:48] Phase 2 Global Placement
+[17:20:48] Phase 2.1 Floorplanning
+[17:21:50] Phase 2.1.1 Partition Driven Placement
+[17:21:50] Phase 2.1.1.1 PBP: Partition Driven Placement
+[17:23:22] Phase 2.1.1.2 PBP: Clock Region Placement
+[17:24:24] Phase 2.1.1.3 PBP: Discrete Incremental
+[17:24:55] Phase 2.1.1.4 PBP: Compute Congestion
+[17:25:26] Phase 2.1.1.5 PBP: Macro Placement
+[17:26:28] Phase 2.1.1.6 PBP: UpdateTiming
+[17:26:59] Phase 2.1.1.7 PBP: Add part constraints
+[17:27:30] Phase 2.2 Physical Synthesis After Floorplan
+[17:27:30] Phase 2.3 Update Timing before SLR Path Opt
+[17:28:00] Phase 2.4 Post-Processing in Floorplanning
+[17:28:00] Phase 2.5 Global Placement Core
+[17:41:23] Phase 2.5.1 UpdateTiming Before Physical Synthesis
+[17:41:54] Phase 2.5.2 Physical Synthesis In Placer
+[17:50:38] Phase 3 Detail Placement
+[17:50:38] Phase 3.1 Commit Multi Column Macros
+[17:50:38] Phase 3.2 Commit Most Macros & LUTRAMs
+[17:54:15] Phase 3.3 Small Shape DP
+[17:54:15] Phase 3.3.1 Small Shape Clustering
+[17:54:45] Phase 3.3.2 Slice Area Swap
+[17:54:45] Phase 3.3.2.1 Slice Area Swap Initial
+[17:56:49] Phase 3.4 Place Remaining
+[17:57:51] Phase 3.5 Re-assign LUT pins
+[17:58:22] Phase 3.6 Pipeline Register Optimization
+[17:58:22] Phase 3.7 Fast Optimization
+[18:00:26] Phase 4 Post Placement Optimization and Clean-Up
+[18:00:26] Phase 4.1 Post Commit Optimization
+[18:03:31] Phase 4.1.1 Post Placement Optimization
+[18:03:31] Phase 4.1.1.1 BUFG Insertion
+[18:03:31] Phase 1 Physical Synthesis Initialization
+[18:05:03] Phase 4.1.1.2 BUFG Replication
+[18:05:03] Phase 4.1.1.3 Post Placement Timing Optimization
+[18:12:45] Phase 4.1.1.4 Replication
+[18:14:18] Phase 4.2 Post Placement Cleanup
+[18:14:18] Phase 4.3 Placer Reporting
+[18:14:18] Phase 4.3.1 Print Estimated Congestion
+[18:14:49] Phase 4.4 Final Placement Cleanup
+[18:56:24] Finished 4th of 6 tasks (FPGA logic placement). Elapsed time: 01h 46m 21s 
+
+[18:56:24] Starting logic routing..
+[18:57:26] Phase 1 Build RT Design
+[18:59:29] Phase 2 Router Initialization
+[18:59:29] Phase 2.1 Fix Topology Constraints
+[18:59:29] Phase 2.2 Pre Route Cleanup
+[18:59:29] Phase 2.3 Global Clock Net Routing
+[19:00:31] Phase 2.4 Update Timing
+[19:04:06] Phase 2.5 Update Timing for Bus Skew
+[19:04:06] Phase 2.5.1 Update Timing
+[19:05:38] Phase 3 Initial Routing
+[19:05:38] Phase 3.1 Global Routing
+[19:05:38] Phase 3.2 Initial Net Routing
+[19:07:11] Phase 4 Rip-up And Reroute
+[19:07:11] Phase 4.1 Global Iteration 0
+[19:16:56] Phase 4.2 Global Iteration 1
+[19:20:01] Phase 4.3 Global Iteration 2
+[19:22:04] Phase 4.4 Global Iteration 3
+[19:23:36] Phase 5 Delay and Skew Optimization
+[19:23:36] Phase 5.1 Delay CleanUp
+[19:23:36] Phase 5.1.1 Update Timing
+[19:24:38] Phase 5.1.2 Update Timing
+[19:25:40] Phase 5.1.3 Update Timing
+[19:26:41] Phase 5.2 Clock Skew Optimization
+[19:26:41] Phase 6 Post Hold Fix
+[19:26:41] Phase 6.1 Hold Fix Iter
+[19:26:41] Phase 6.1.1 Update Timing
+[19:28:14] Phase 6.2 Non Free Resource Hold Fix Iter
+[19:28:14] Phase 7 Route finalize
+[19:28:14] Phase 8 Verifying routed nets
+[19:28:45] Phase 9 Depositing Routes
+[19:29:15] Phase 10 Leaf Clock Prog Delay Opt
+[19:30:17] Phase 10.1 Optimize Skews
+[19:30:17] Phase 10.1.1 Leaf ClockOpt Init
+[19:32:20] Phase 10.2 Post SkewOpt Delay Cleanup
+[19:32:20] Phase 10.2.1 Delay CleanUp
+[19:32:20] Phase 10.2.1.1 Update Timing
+[19:33:22] Phase 10.2.1.2 Update Timing
+[19:34:54] Phase 10.2.1.3 Update Timing
+[19:35:56] Phase 10.3 Post SkewOpt Hold Fix
+[19:35:56] Phase 10.3.1 Hold Fix Iter
+[19:35:56] Phase 10.3.1.1 Update Timing
+[19:39:01] Phase 11 Depositing Routes
+[19:39:32] Phase 12 Resolve XTalk
+[19:39:32] Phase 13 Post Router Timing
+[19:42:06] Phase 14 Physical Synthesis in Router
+[19:42:06] Phase 14.1 Physical Synthesis Initialization
+[19:45:11] Phase 14.2 Critical Path Optimization
+[19:47:45] Phase 15 Route finalize
+[19:47:45] Finished 5th of 6 tasks (FPGA routing). Elapsed time: 00h 51m 21s 
+
+[19:47:45] Starting bitstream generation..
+[19:47:45] Phase 16 Post-Route Event Processing
+Starting optional post-route physical design optimization.
+[19:59:34] Phase 1 Physical Synthesis Initialization
+[20:02:39] Phase 2 Critical Path Optimization
+[20:19:06] Phase 3 Hold Fix Optimization
+Finished optional post-route physical design optimization.
+[20:31:26] Creating bitmap...
+[20:37:05] Writing bitstream ./level0_i_ulp_my_rm_partial.bit...
+[20:37:36] Finished 6th of 6 tasks (FPGA bitstream generation). Elapsed time: 00h 49m 50s 
+Check VPL, containing 12 checks, has run: 0 errors, 7 warning violations, 1 advisory violation
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_1 is located in SLR1 while its port predecoder_1/m_axi_gmem0 is connected to a memory in SLR0.
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_1 is located in SLR1 while its port predecoder_1/m_axi_gmem1 is connected to a memory in SLR0.
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_1 is located in SLR1 while its port predecoder_1/m_axi_gmem2 is connected to a memory in SLR0.
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_2 is located in SLR2 while its port predecoder_2/m_axi_gmem0 is connected to a memory in SLR0.
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_2 is located in SLR2 while its port predecoder_2/m_axi_gmem1 is connected to a memory in SLR0.
+WARNING: [ACCELERATOR-SLR-01] The compute unit predecoder_2 is located in SLR2 while its port predecoder_2/m_axi_gmem2 is connected to a memory in SLR0.
+WARNING: [AUTO-FREQ-SCALING-04] One or more timing paths failed timing requirements. The kernel clock ulp_ucs/aclk_kernel_00 has an original frequency equal to 300.000000 MHz. The frequency has been automatically changed to 298.8 MHz to enable proper functionality. The clock Id is 0.
+ADVISORY: [AUTO-FREQ-SCALING-08] For clock hbm_aclk, the auto scaled frequency 452.2 MHz exceeds the original specified frequency. The compiler will select the original specified frequency of 450.0 MHz.
+[20:39:05] Run vpl: Step impl: Completed
+[20:39:06] Run vpl: FINISHED. Run Status: impl Complete!
+INFO: [v++ 60-1441] [20:39:06] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:05:38 ; elapsed = 04:22:02 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 323969 ; free virtual = 927034
+INFO: [v++ 60-1443] [20:39:06] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [v++ 60-991] clock name 'ulp_ucs/aclk_kernel_01' (clock ID '1') is being mapped to clock name 'KERNEL_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'ulp_ucs/aclk_kernel_00' (clock ID '0') is being mapped to clock name 'DATA_CLK' in the xclbin
+INFO: [v++ 60-991] clock name 'hbm_aclk' (clock ID '') is being mapped to clock name 'hbm_aclk' in the xclbin
+INFO: [v++ 60-1230] The compiler selected the following frequencies for the runtime controllable kernel clock(s) and scalable system clock(s): System (SYSTEM) clock: hbm_aclk = 450, Kernel (KERNEL) clock: ulp_ucs/aclk_kernel_01 = 500, Kernel (DATA) clock: ulp_ucs/aclk_kernel_00 = 298
+INFO: [v++ 60-1453] Command Line: cf2sw -a <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/address_map.xml -sdsl <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/sdsl.dat -xclbin <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/xclbin_orig.xml -rtd <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder.rtd -o <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-1441] [20:39:12] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 368983 ; free virtual = 972049
+INFO: [v++ 60-1443] [20:39:12] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section BITSTREAM:RAW:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder.rtd --append-section :JSON:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder_xml.rtd --add-section BUILD_METADATA:JSON:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder_build.rtd --add-section EMBEDDED_METADATA:RAW:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder.xml --add-section SYSTEM_METADATA:RAW:<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u55c_gen3x16_xdma_3_202210_1 --output <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+XRT Build Version: 2.16.204 (2023.2)
+       Build Date: 2023-10-11 23:46:00
+          Hash ID: fa4c0045003fed0acea4593788dce5ef6d0b66ee
+Creating a default 'in-memory' xclbin image.
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 62732446 bytes
+Format : RAW
+File   : '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/partial.bit'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was successfully added.
+Size   : 410 bytes
+Format : JSON
+File   : '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 3982 bytes
+Format : JSON
+File   : '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 252932 bytes
+Format : RAW
+File   : '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/predecoder.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 37746 bytes
+Format : RAW
+File   : '<WS>/neural_decoder/four_card_decoder/build/hw/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+
+Section: 'PARTITION_METADATA'(20) was successfully appended to.
+Format : JSON
+File   : 'partition_metadata'
+
+Section: 'IP_LAYOUT'(8) was successfully appended to.
+Format : JSON
+File   : 'ip_layout'
+Successfully wrote (63057596 bytes) to the output file: <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [20:39:12] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.28 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 368915 ; free virtual = 972040
+INFO: [v++ 60-1443] [20:39:12] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin.info --input <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [v++ 60-1441] [20:39:13] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:00.5 ; elapsed = 00:00:00.66 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 366002 ; free virtual = 969127
+INFO: [v++ 60-1443] [20:39:13] Run run_link: Step generate_sc_driver: Started
+INFO: [v++ 60-1453] Command Line: 
+INFO: [v++ 60-1454] Run Directory: <WS>/neural_decoder/four_card_decoder/build/hw/_x/link/run_link
+INFO: [v++ 60-1441] [20:39:13] Run run_link: Step generate_sc_driver: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 491.457 ; gain = 0.000 ; free physical = 365982 ; free virtual = 969107
+INFO: [v++ 60-2331] SLR1 was specfied for compute unit predecoder_1, and verified as such in implementation.
+INFO: [v++ 60-2331] SLR2 was specfied for compute unit predecoder_2, and verified as such in implementation.
+Check POST-VPL, containing 1 checks, has run: 0 errors
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link/system_estimate_predecoder.xtxt
+INFO: [v++ 60-586] Created <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.ltx
+INFO: [v++ 60-586] Created predecoder.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link/v++_link_predecoder_guidance.html
+	Timing Report: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+	Vivado Log: <WS>/neural_decoder/four_card_decoder/build/hw/_x/logs/link/vivado.log
+	Steps Log File: <WS>/neural_decoder/four_card_decoder/build/hw/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer <WS>/neural_decoder/four_card_decoder/build/hw/predecoder.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 4h 22m 45s
+INFO: [v++ 60-1653] Closing dispatch client.
+== [2026-10-19T20:39:15+05:30] BUILD_EXIT 0 ==
+BUILD_DONE_RC=0

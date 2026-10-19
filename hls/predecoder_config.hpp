@@ -11,8 +11,8 @@ constexpr int T_MAX = 13;                    // rounds per window
 constexpr int SITES_MAX = T_MAX * D_MAX * D_MAX;
 constexpr int C_IN0 = 4;                     // input channels of layer 1
 constexpr int C = 128;                       // hidden channels
-constexpr int C_OUT = 4;                     // output channels of layer 4
-constexpr int LAYERS = 4;
+constexpr int C_OUT = 4;                     // output channels of the last layer
+constexpr int LAYERS = 6;                    // maximum; per launch L = 4 (NVIDIA model 1, Fast) or 6 (model 4, Accurate)
 constexpr int TAPS = 27;                     // 3 x 3 x 3 kernel
 constexpr int PI = 16;                       // input channels per cycle
 constexpr int PO = 64;                       // output channels per cycle

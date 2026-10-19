@@ -1,0 +1,50 @@
+== 2026-10-19 20:40:09 timing: <WS>/neural_decoder/four_card_decoder/build/hw/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt
+WNS -0.025 ns, kernel clock in the xclbin: 298 MHz
+d399f8d00fb9dc7155e28d0aa41670e9d49ea117409756260c8b81de45487dc1  predecoder.xclbin
+== 2026-10-19 20:40:10 cards
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=264, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+check fast device 0 (2 instances): PASS
+check fast device 1 (2 instances): PASS
+check fast device 2 (2 instances): PASS
+check fast device 3 (2 instances): PASS
+bench fast 1 card(s) rep 0: 622.5 windows/s
+bench fast 1 card(s) rep 1: 622.5 windows/s
+bench fast 1 card(s) rep 2: 622.5 windows/s
+bench fast 2 card(s) rep 0: 1245.0 windows/s
+bench fast 2 card(s) rep 1: 1244.9 windows/s
+bench fast 2 card(s) rep 2: 1244.9 windows/s
+bench fast 4 card(s) rep 0: 2489.9 windows/s
+bench fast 4 card(s) rep 1: 2489.8 windows/s
+bench fast 4 card(s) rep 2: 2489.8 windows/s
+latency fast: 3.768 ms per window (one in flight)
+Creating Stim inference datapipe: d=13, n_rounds=13, num_samples=264, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+check accurate device 0 (2 instances): PASS
+check accurate device 1 (2 instances): PASS
+check accurate device 2 (2 instances): PASS
+check accurate device 3 (2 instances): PASS
+bench accurate 1 card(s) rep 0: 127.3 windows/s
+bench accurate 1 card(s) rep 1: 127.3 windows/s
+bench accurate 1 card(s) rep 2: 127.3 windows/s
+bench accurate 2 card(s) rep 0: 254.6 windows/s
+bench accurate 2 card(s) rep 1: 254.6 windows/s
+bench accurate 2 card(s) rep 2: 254.6 windows/s
+bench accurate 4 card(s) rep 0: 509.3 windows/s
+bench accurate 4 card(s) rep 1: 509.3 windows/s
+bench accurate 4 card(s) rep 2: 509.3 windows/s
+latency accurate: 16.560 ms per window (one in flight)
+wrote <WS>/neural_decoder/four_card_decoder/../runs/hw/cards_20261019_2040.json
+== 2026-10-19 20:52:38 campaign stopped after the card part; CPU baselines run by runs/cpu_after_ler.sh after QUEUE2_DONE
+== 2026-10-19 21:30:38 CPU baselines (cards idle)
+float32  batch    1:       98.0 windows/s
+float32  batch    4:      412.3 windows/s
+float32  batch   16:      994.3 windows/s
+float32  batch   64:      799.7 windows/s
+float32  batch  256:      745.9 windows/s
+float32  batch    1:       47.0 windows/s
+float32  batch    4:      100.9 windows/s
+float32  batch   16:      146.1 windows/s
+float32  batch   64:      130.3 windows/s
+float32  batch  256:      174.7 windows/s
+== 2026-10-19 21:32:26 CAMPAIGN_DONE

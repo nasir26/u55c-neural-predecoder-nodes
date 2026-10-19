@@ -1,0 +1,22 @@
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=1048576, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+[DEM Timing] build=0.03s decode=16.13s (basis=X, batches=512)
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=1048576, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=Z, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0020, Z:0.0020], meas=[X:0.0020, Z:0.0020], idle_cnot=[X:0.0010, Y:0.0010, Z:0.0010], idle_spam=[X:0.0020, Y:0.0020, Z:0.0020], cnot_total=0.0030)
+[DEM Timing] build=0.03s decode=16.19s (basis=Z, batches=512)
+{
+ "X": {
+  "logical error ratio (mean)": 0.0012054443359375,
+  "logical error ratio (standard error)": 3.388532901805211e-05,
+  "logical error ratio (pymatch mean)": 0.0013017654418945312,
+  "logical error ratio (pymatch standard error)": 3.521142112789235e-05
+ },
+ "Z": {
+  "logical error ratio (mean)": 0.0011587142944335938,
+  "logical error ratio (standard error)": 3.322281808595481e-05,
+  "logical error ratio (pymatch mean)": 0.00118255615234375,
+  "logical error ratio (pymatch standard error)": 3.356247569518822e-05
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "source": "crossref",
+ "doi": "10.1145/2684746.2689060",
+ "title": "Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks",
+ "venue": "Proceedings of the 2015 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays",
+ "volume": null,
+ "issue": null,
+ "pages": "161-170",
+ "year": 2015,
+ "authors": [
+  [
+   "Zhang",
+   "Chen"
+  ],
+  [
+   "Li",
+   "Peng"
+  ],
+  [
+   "Sun",
+   "Guangyu"
+  ],
+  [
+   "Guan",
+   "Yijin"
+  ],
+  [
+   "Xiao",
+   "Bingjun"
+  ],
+  [
+   "Cong",
+   "Jason"
+  ]
+ ],
+ "type": "proceedings-article",
+ "publisher": "ACM",
+ "url": "https://doi.org/10.1145/2684746.2689060"
+}

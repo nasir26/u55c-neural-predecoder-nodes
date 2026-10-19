@@ -1,0 +1,43 @@
+{
+ "source": "crossref",
+ "doi": "10.1145/3020078.3021744",
+ "title": "FINN",
+ "venue": "Proceedings of the 2017 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays",
+ "volume": null,
+ "issue": null,
+ "pages": "65-74",
+ "year": 2017,
+ "authors": [
+  [
+   "Umuroglu",
+   "Yaman"
+  ],
+  [
+   "Fraser",
+   "Nicholas J."
+  ],
+  [
+   "Gambardella",
+   "Giulio"
+  ],
+  [
+   "Blott",
+   "Michaela"
+  ],
+  [
+   "Leong",
+   "Philip"
+  ],
+  [
+   "Jahre",
+   "Magnus"
+  ],
+  [
+   "Vissers",
+   "Kees"
+  ]
+ ],
+ "type": "proceedings-article",
+ "publisher": "ACM",
+ "url": "https://doi.org/10.1145/3020078.3021744"
+}

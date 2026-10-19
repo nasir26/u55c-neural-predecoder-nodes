@@ -1,0 +1,32 @@
+\section{The Ising pre-decoders and their evaluation}\label{sec:background}
+
+\textbf{Input window.} The pre-decoder sees a window of $T$ syndrome rounds of a rotated surface code of distance $d$
+as a tensor of shape $(4, T, d, d)$ \cite{chamberland2026predecoder}. Two channels carry the syndrome bits of the X
+and Z stabilizers, placed on the $d\times d$ grid of data qubits, and two channels carry fixed masks that mark which
+grid positions hold a stabilizer of each type. The syndrome channels take the values 0 and 1 and the mask channels
+the values 0, $\tfrac12$ and 1.
+
+\textbf{Network.} Both released surface code networks are stacks of three dimensional convolutions with $3\times
+3\times 3$ kernels, zero padding that keeps the window size, and the tanh approximation of GELU
+\cite{hendrycks2016gelu} between layers, without normalization layers. The Fast network (model 1) has four layers,
+$4\to128\to128\to128\to4$ channels and 912{,}772 parameters; the Accurate network (model 4) has six layers,
+$4\to128\to128\to128\to128\to128\to4$ channels and about 1.8 million parameters \cite{nvidia_fast_card,
+nvidia_accurate_card}. Their receptive fields are 9 and 13 sites, and they were trained on windows with $d=T=9$ and
+$d=T=13$. Because the networks are fully convolutional, the same weights apply to any larger window.
+
+\textbf{Output and use.} The four output channels are logits of a correction on each data qubit (two channels) and
+of a flip of each syndrome bit (two channels). A logit at or above a threshold (zero in the released configuration)
+selects the correction. The corrections are applied to the syndrome, and PyMatching decodes the residual syndrome
+with the detector error model of the circuit; the logical outcome combines the pre-decoder corrections and the
+matching \cite{chamberland2026predecoder,higgott2025sparse}.
+
+\textbf{Evaluation.} NVIDIA's evaluation samples memory experiments with Stim \cite{gidney2021stim} under a circuit
+level noise model with 25 parameters (state preparation, measurement, idling during CNOT layers and during
+preparation and reset, and the fifteen two qubit Pauli errors of a CNOT), which their public configuration sets for a
+physical error rate $p=0.003$ \cite{nvidia_ising_code}. For each shot it reports whether PyMatching alone and the
+pre-decoder followed by PyMatching recover the logical observable. We use this code without modification for every
+logical error rate in this paper, and add only the scaling of the 25 parameters to other values of $p$ with the
+relations given in the public configuration (preparation and measurement $2p/3$, idling during CNOT layers $p/3$ per
+Pauli, idling during preparation and reset $2p/3-4p^2/9$ per Pauli, and $p/15$ per two qubit Pauli). We report the
+ratio of the number of logical errors of PyMatching alone to that of the pre-decoder followed by PyMatching on the
+same shots; a ratio above one is an improvement.

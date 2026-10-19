@@ -1,0 +1,34 @@
+\section{Experimental setup}\label{sec:setup}
+
+\textbf{Hardware.} The host has two \NumHostCpu{} processors with \NumHostThreads{} hardware threads in total and
+\NumHostMemGiB{}~GiB of memory, and four AMD Alveo U55C cards \cite{amd_ds978} on PCIe, each with 16~GiB of HBM2 and the
+shell \texttt{xilinx\_u55c\_gen3x16\_xdma\_base\_3}, driven by XRT \NumXrtVersion{} \cite{amd_xrt}. The kernel was
+synthesized with Vitis HLS 2023.2 and linked with Vitis 2023.2 at a 300~MHz kernel clock target, with the two instances
+constrained to SLR1 and SLR2.
+
+\textbf{Networks and evaluation.} The pretrained Fast (checkpoint v1.0.77) and Accurate (v1.0.86) networks were
+downloaded from NVIDIA's model pages and checked against their published SHA256 hashes \cite{nvidia_fast_card,
+nvidia_accurate_card}. Logical error rates were computed with NVIDIA's evaluation code at commit \NumNvidiaCommit{}
+\cite{nvidia_ising_code}, run on the host CPU with PyTorch \NumTorchVersion{}, Stim \NumStimVersion{}
+\cite{gidney2021stim} and PyMatching \NumPymatchingVersion{} \cite{higgott2025sparse}, for memory experiments in both
+the X and the Z basis with $T=d$ rounds. The integer model was calibrated on 2{,}048 windows (Fast) or 1{,}024 windows
+(Accurate), half from each basis, drawn from the same pipeline at the same noise level, separate from the
+evaluation shots.
+
+\textbf{Card measurements.} Each card measurement starts with a bit exact check: a batch of windows from the
+inference pipeline (eight test windows, after a calibration of the integer model on 256 other windows) runs on both
+instances of every card, and the output bits are compared with the integer model.
+Throughput is then measured on one, two and four cards with batches of 64 windows per launch, two launches in flight
+per instance, and about 20 seconds per point, three repetitions per point; we report the median. Latency is the time
+of one launch of a single window with one launch in flight, averaged over 200 launches; it includes the host to card
+transfer of the window and the transfer of the result back. The card temperatures are read before and after every
+point. A logical error rate evaluation ran on the host CPU during the card measurements; the host
+processes of the cards only start launches and copy data, and the throughput agrees with the cycle model of the
+kernel (Section~\ref{sec:hw}).
+
+\textbf{CPU baseline.} The same floating point networks run in PyTorch \NumTorchVersion{} on the host, in inference
+mode, with the cards idle and no other job running, with \NumCpuThreadList{} threads and batch sizes from 1 to 256,
+each point for 10 seconds and repeated \NumCpuReps{} times. We report the best throughput over threads, batch sizes
+and repetitions, and the best throughput at batch size one; on this two socket host fewer threads are often faster
+than all of them. Reduced precision (bfloat16) was much slower than single precision on this processor and is not
+used.

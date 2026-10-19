@@ -1,0 +1,27 @@
+{
+ "source": "crossref",
+ "doi": "10.1109/tqe.2022.3174017",
+ "title": "Neural-Network Decoders for Quantum Error Correction Using Surface Codes: A Space Exploration of the Hardware Cost-Performance Tradeoffs",
+ "venue": "IEEE Transactions on Quantum Engineering",
+ "volume": "3",
+ "issue": null,
+ "pages": "1-19",
+ "year": 2022,
+ "authors": [
+  [
+   "Overwater",
+   "Ramon W. J."
+  ],
+  [
+   "Babaie",
+   "Masoud"
+  ],
+  [
+   "Sebastiano",
+   "Fabio"
+  ]
+ ],
+ "type": "journal-article",
+ "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+ "url": "https://doi.org/10.1109/tqe.2022.3174017"
+}

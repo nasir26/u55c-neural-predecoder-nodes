@@ -1,0 +1,1 @@
+WARNING: [AUTO-FREQ-SCALING-04] One or more timing paths failed timing requirements. The kernel clock ulp_ucs/aclk_kernel_00 has an original frequency equal to 300.000000 MHz. The frequency has been automatically changed to 298.8 MHz to enable proper functionality. The clock Id is 0.

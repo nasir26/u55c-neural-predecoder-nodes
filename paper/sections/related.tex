@@ -1,0 +1,32 @@
+\section{Related work}\label{sec:related}
+
+\textbf{Decoders on FPGAs.} LILLIPUT maps small surface codes to lookup tables in FPGA memory \cite{das2022lilliput}.
+Liyanage et al.\ implemented a union find decoder for surface codes on an FPGA and later proposed a
+distributed union find decoder \cite{liyanage2023fpga,liyanage2024distributed}. Barber et al.\ demonstrated a real time, resource efficient decoder in
+FPGA and ASIC form \cite{barber2025decoder}. These designs implement a complete decoder in custom logic; the present
+work instead accelerates a learned stage in front of an unchanged software decoder.
+
+\textbf{Neural decoders.} Torlai and Melko trained a restricted Boltzmann machine as a decoder for topological codes
+\cite{torlai2017neural}. Chamberland and Ronagh studied deep neural decoders for fault tolerance experiments and noted
+the latency constraints of real time use \cite{chamberland2018deep}. Gicev et al.\ proposed a convolutional decoder
+that scales to large distances \cite{gicev2023scalable}, and AlphaQubit learned a high accuracy decoder from
+experimental data \cite{bausch2024alphaqubit}. Overwater et al.\ explored the trade off between hardware cost and
+performance of neural network decoders for the surface code \cite{overwater2022neural}.
+
+\textbf{Pre-decoders.} The NVIDIA Ising pre-decoders \cite{chamberland2026predecoder} are fully convolutional
+networks over a space and time window of the syndrome. They predict local data qubit corrections and syndrome flips;
+after the corrections are applied, PyMatching decodes the residual syndrome. Five surface code models of growing size
+are described; two are released with weights, the four layer model 1 (``Fast'', receptive field 9) and the six layer
+model 4 (``Accurate'', receptive field 13) \cite{nvidia_fast_card,nvidia_accurate_card}. Their reference
+implementation targets GPUs and TensorRT, including reduced precision inference.
+
+\textbf{Neural networks on FPGAs.} Weight stationary convolution engines with on chip buffers are the classic FPGA
+design for convolutional networks \cite{zhang2015optimizing}; FINN and hls4ml generate quantized network accelerators
+from high level descriptions \cite{umuroglu2017finn,duarte2018hls4ml}, and integer only inference with per channel
+scales and requantization multipliers is the standard quantization scheme \cite{jacob2018quantization}. Our kernel
+follows these principles in hand written HLS \cite{cong2011hls,amd_ug1399} so that its arithmetic matches an integer
+model that can be checked against NVIDIA's evaluation.
+
+\textbf{Multiple FPGAs as nodes.} In our earlier work a quantum circuit statevector was distributed over four Alveo
+U55C cards, each card a node with its own host process and memory \cite{ali2026multifpga}. The same view applies
+here, without data exchange between cards because the windows are independent.

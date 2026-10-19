@@ -1,0 +1,52 @@
+\section{Introduction}\label{sec:intro}
+
+A fault tolerant quantum computer protects its logical qubits with an error correcting code and must decode the
+syndrome of that code while the computation runs \cite{dennis2002topological,fowler2012surface}. The rotated surface
+code \cite{kitaev2003anyons,fowler2012surface} is the leading candidate for superconducting hardware, where logical memories below threshold have now been
+demonstrated \cite{google2023scaling,google2025below}. Its standard decoder, minimum weight perfect matching, is
+implemented efficiently on CPUs by PyMatching and the Sparse Blossom algorithm \cite{higgott2022pymatching,
+higgott2025sparse}, and union find decoders trade some accuracy for a simpler and faster procedure
+\cite{delfosse2021unionfind}. Because a superconducting device produces a new round of syndrome data about every
+microsecond, a decoder that falls behind accumulates a backlog that eventually stalls the computation, and dedicated
+hardware such as FPGAs has been used to keep up \cite{das2022lilliput,liyanage2023fpga,liyanage2024distributed,
+barber2025decoder}. Where syndrome cycles last milliseconds, as in trapped ion architectures, a single CPU can decode
+all logical qubits of a large application in real time \cite{ye2026megaquop}; the case for accelerators therefore
+rests on the microsecond budget of fast platforms.
+
+Neural networks offer a second route. They have been trained as complete decoders \cite{torlai2017neural,
+chamberland2018deep,gicev2023scalable,bausch2024alphaqubit} and, more recently, as \emph{pre-decoders}: a local
+network removes the short error chains that dominate the syndrome and leaves a sparser residual syndrome to a global
+decoder. Chamberland et al.\ released a family of such pre-decoders, the NVIDIA Ising pre-decoders, as fully
+convolutional three dimensional networks over space and time, together with their training code and pretrained
+weights \cite{chamberland2026predecoder,nvidia_ising_code,nvidia_fast_card,nvidia_accurate_card}. On GPUs the
+pre-decoder both lowers the logical error rate of uncorrelated matching and shortens the time PyMatching needs for the
+residual syndrome \cite{chamberland2026predecoder}. A convolutional network of fixed size, applied to a fixed window of
+syndrome data, is also a natural workload for an FPGA: its arithmetic is regular, its weights fit on chip, and
+integer arithmetic suffices for inference \cite{jacob2018quantization,zhang2015optimizing,umuroglu2017finn,
+duarte2018hls4ml}. Overwater et al.\ analysed the hardware cost of neural decoders for this reason
+\cite{overwater2022neural}.
+
+This paper places the two published surface code pre-decoders on four AMD Alveo U55C cards. Following our earlier
+multi FPGA work, each card is an independent compute node driven by its own host process \cite{ali2026multifpga}; a
+batch of syndrome windows is spread over the nodes, which is the shot parallel mode of a decoder serving many
+independent windows. The contributions are:
+
+\begin{itemize}
+\item An integer model of both networks (8 bit weights and activations, 32 bit accumulation, integer requantization
+and a 256 entry GELU table) that keeps NVIDIA's evaluation pipeline unchanged, so that the floating point networks,
+the integer model and the FPGA output are judged by the same logical error rate code.
+\item One HLS kernel that runs the four layer Fast network and the six layer Accurate network from the same bitstream,
+with all activations and partial sums on chip, and that is bit exact with the integer model in C simulation and on
+every instance of every card.
+\item Measurements on four cards: throughput on one, two and four nodes and latency per window, against the same
+networks in PyTorch on a 256 thread host CPU, and logical error rates of the floating point and integer networks
+against PyMatching alone.
+\item A reproduction of NVIDIA's published accuracy for both networks with their own evaluation code, which shows when a
+pre-decoder pays off: the small Fast network gives little or no gain at a physical error rate of $p=0.003$, and the
+gains reported for the family come from the larger network and from higher noise.
+\end{itemize}
+
+Section~\ref{sec:related} reviews decoders on FPGAs and neural decoders, Section~\ref{sec:background} the
+pre-decoder and its evaluation, Section~\ref{sec:quant} the integer model, Section~\ref{sec:arch} the kernel and the
+node runtime, Section~\ref{sec:setup} the experimental setup, Section~\ref{sec:results} the results and
+Section~\ref{sec:discussion} their limits.

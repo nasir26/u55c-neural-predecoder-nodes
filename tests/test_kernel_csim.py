@@ -59,3 +59,26 @@ def test_kernel_bit_exact(tb, tmp_path, basis, d, t):
                     str(d), str(t), str(tmp_path / "b.bin")], check=True)
     got = unpack_bits(np.fromfile(tmp_path / "b.bin", dtype=np.uint8).reshape(len(xi), -1), t, d)
     assert np.array_equal(got, want)
+
+
+ACCURATE = MODELS / "nvidia" / "ising_decoder_surface_code_1_accurate_r13_v1.0.86_fp16.safetensors"
+
+
+@pytest.mark.skipif(not ACCURATE.exists(), reason="NVIDIA's Accurate checkpoint (model 4, gated) not downloaded")
+def test_kernel_bit_exact_model4(tb, tmp_path):
+    """The same build with L = 6 layers against the integer model of NVIDIA's model 4 (Accurate), d = 13, 13 rounds."""
+    d = t = 13
+    cfg = nb.make_cfg(d, t, model_id=4)
+    model, _ = nb.load_reference_model(str(ACCURATE))
+    model = model.float()
+    X = torch.stack([b["trainX"] for _, b in zip(range(35), nb.sample_windows(cfg, "X", 35))])
+    qm = calibrate(model, X[:32])
+    assert len(qm.layers) == 6
+    xi = np.rint(X[32:].numpy() * 2).astype(np.int64)
+    want, _ = qm.forward_int_fast(xi)
+    wmem, params = pack_model(qm)
+    wmem.tofile(tmp_path / "w.bin"); params.tofile(tmp_path / "p.bin"); pack_windows(xi).tofile(tmp_path / "x.bin")
+    subprocess.run([str(tb), str(tmp_path / "w.bin"), str(tmp_path / "p.bin"), str(tmp_path / "x.bin"), str(len(xi)),
+                    str(d), str(t), str(tmp_path / "b.bin")], check=True)
+    got = unpack_bits(np.fromfile(tmp_path / "b.bin", dtype=np.uint8).reshape(len(xi), -1), t, d)
+    assert np.array_equal(got, want)

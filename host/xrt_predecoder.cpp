@@ -2,7 +2,8 @@
 // Author: Nasir Ali, C-DAC Noida.
 //
 // Loads the bitstream, copies the packed weights and parameters into every kernel instance once, then launches
-// every instance `launches` times on `windows` windows each, two launches per instance in flight. The input windows
+// every instance `launches` times on `windows` windows each, two launches per instance in flight (one with
+// NPD_INFLIGHT=1, for latency). The input windows
 // of a launch are taken cyclically from the input file; every launch's output bits are copied back to host memory
 // before it counts. Instances are named predecoder_1, predecoder_2, ... (build script).
 //
@@ -64,6 +65,8 @@ int main(int argc, char **argv) {
     const size_t sites = (size_t)T * D * D, in_bytes = (size_t)windows * sites;
     if (x.size() < sites || x.size() % sites) fail("x.bin is not a whole number of windows");
     if (windows < 1 || launches < 1) fail("windows and launches must be positive");
+    const int L = (int(params.size() / 4) + 380) / 512;   // params hold 512 L - 380 int32 words (host/pack.py)
+    if (512 * L - 380 != int(params.size() / 4) || (L != 4 && L != 6)) fail("params.bin does not hold 4 or 6 layers");
 
     xrt::device device(dev_index);
     xrt::uuid uuid = device.load_xclbin(xclbin);
@@ -91,9 +94,10 @@ int main(int argc, char **argv) {
         }
         inst.push_back(I);
     }
+    const bool one_in_flight = std::getenv("NPD_INFLIGHT") && std::atoi(std::getenv("NPD_INFLIGHT")) == 1;
     std::FILE *dump = argc == 11 ? std::fopen(argv[10], "wb") : nullptr;
     auto launch = [&](long k) {
-        for (Instance &I : inst) I.run[k % 2] = I.k(I.w, I.p, I.in[k % 2], I.out[k % 2], windows, D, T);
+        for (Instance &I : inst) I.run[k % 2] = I.k(I.w, I.p, I.in[k % 2], I.out[k % 2], windows, D, T, L);
     };
     auto finish = [&](long k) {
         for (Instance &I : inst) {
@@ -102,7 +106,7 @@ int main(int argc, char **argv) {
             if (dump && k == 0) std::fwrite(I.out[0].map<const uint8_t *>(), 1, in_bytes, dump);
         }
     };
-    std::fprintf(stderr, "instances %zu\n", inst.size());
+    std::fprintf(stderr, "instances %zu layers %d\n", inst.size(), L);
     std::fprintf(stderr, "ready\n");
     std::fflush(stderr);
     if (const char *go = std::getenv("STIM_GO_FILE")) {
@@ -111,12 +115,19 @@ int main(int argc, char **argv) {
     }
     const auto w0 = std::chrono::system_clock::now();
     const auto t0 = std::chrono::steady_clock::now();
-    launch(0);
-    for (long k = 1; k < launches; k++) {
-        launch(k);
-        finish(k - 1);
+    if (one_in_flight) {                    // latency: each launch waits for the previous one
+        for (long k = 0; k < launches; k++) {
+            launch(k);
+            finish(k);
+        }
+    } else {                                // throughput: two launches per instance in flight
+        launch(0);
+        for (long k = 1; k < launches; k++) {
+            launch(k);
+            finish(k - 1);
+        }
+        finish(launches - 1);
     }
-    finish(launches - 1);
     const auto t1 = std::chrono::steady_clock::now();
     const auto w1 = std::chrono::system_clock::now();
     if (dump) std::fclose(dump);

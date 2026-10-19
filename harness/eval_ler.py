@@ -18,6 +18,17 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "model")]
 import nvidia_bridge as nb  # noqa: E402
 
 
+def noise_overrides(p: float) -> list[str]:
+    """NVIDIA's 25 parameter circuit noise at physical error rate p, with the relations of its public config
+    (prep and measurement 2p/3, idle during CNOT p/3 per axis, idle during SPAM 2p/3 - 4p^2/9 per axis, CNOT p/15
+    per two qubit Pauli)."""
+    o = [f"data.noise_model.p_prep_{b}={2 * p / 3}" for b in "XZ"] + [f"data.noise_model.p_meas_{b}={2 * p / 3}" for b in "XZ"]
+    o += [f"data.noise_model.p_idle_cnot_{b}={p / 3}" for b in "XYZ"]
+    o += [f"data.noise_model.p_idle_spam_{b}={2 * p / 3 - 4 * p * p / 9}" for b in "XYZ"]
+    o += [f"data.noise_model.p_cnot_{a}{b}={p / 15}" for a in "IXYZ" for b in "IXYZ" if a + b != "II"]
+    return o
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True)
@@ -28,11 +39,13 @@ def main():
     ap.add_argument("--cal-windows", type=int, default=1024)
     ap.add_argument("--percentile", type=float, default=99.99)
     ap.add_argument("--out", default="")
+    ap.add_argument("--p", type=float, default=0.0,
+                    help="scale NVIDIA's 25 parameter noise model to physical error rate p (default: its p = 0.003 values)")
     a = ap.parse_args()
-    cfg = nb.make_cfg(a.d, a.t)
     dist = nb.dist_manager()
     model, meta = nb.load_reference_model(a.checkpoint)
-    info = dict(variant=a.variant, d=a.d, t=a.t, shots_per_basis=a.shots, checkpoint=os.path.basename(a.checkpoint),
+    cfg = nb.make_cfg(a.d, a.t, model_id=int(meta.get("model_id", 1)), extra=noise_overrides(a.p) if a.p else ())
+    info = dict(variant=a.variant, d=a.d, t=a.t, p=a.p or 0.003, shots_per_basis=a.shots, checkpoint=os.path.basename(a.checkpoint),
                 metadata=meta, start=time.strftime("%Y-%m-%d %H:%M:%S"))
     if a.variant == "fp32":
         model = model.float()

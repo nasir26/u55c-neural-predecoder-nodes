@@ -1,0 +1,88 @@
+%% Neural pre-decoding for the surface code on four FPGA nodes
+%% Author: Nasir Ali, C-DAC Noida
+
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\pdfgentounicode=1
+\input{glyphtounicode}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{url}
+\usepackage{etoolbox}
+\AtBeginEnvironment{table}{\small}
+
+\newcommand{\PENDING}[1]{\textcolor{red}{[PENDING: #1]}}
+\input{generated/macros.tex}
+
+\raggedbottom
+
+\begin{document}
+
+\title[Neural Pre-Decoding on Four FPGA Nodes]{Neural Pre-Decoding for the Surface Code on Four FPGA Nodes:
+Integer Inference of Convolutional Pre-Decoders on Alveo U55C Accelerators}
+
+\author*[1]{\fnm{Nasir} \sur{Ali}}\email{nasirali2607@gmail.com}
+
+\affil*[1]{\orgdiv{Embedded Systems Division},
+           \orgname{Centre for Development of Advanced Computing},
+           \orgaddress{\city{Noida}, \postcode{201307}, \country{India}}}
+
+\abstract{\input{sections/abstract.tex}}
+
+\keywords{FPGA, Quantum error correction, Surface code, Neural decoder, Pre-decoder, Integer quantization,
+High-level synthesis, Multi-FPGA, Alveo U55C}
+
+\maketitle
+
+\input{sections/introduction.tex}
+\input{sections/related.tex}
+\input{sections/background.tex}
+\input{sections/quantization.tex}
+\input{sections/architecture.tex}
+\input{sections/setup.tex}
+\input{sections/results.tex}
+\input{sections/discussion.tex}
+\input{sections/conclusions.tex}
+
+\backmatter
+
+\bmhead{Acknowledgments}
+This work was funded by the Ministry of Electronics and Information Technology (MeitY), Government of India. The
+research was conducted at the C-DAC Noida Centre under the supervision of Mr. Abhishek Tiwari, Scientist F, Embedded
+Systems Division, C-DAC Noida. We thank NVIDIA for releasing the Ising pre-decoders, their training and evaluation
+code and their pretrained weights, and the developers of Stim and PyMatching, on which the evaluation of this work
+depends.
+
+\section*{Declarations}
+
+\textbf{Funding.} This work was funded by the Ministry of Electronics and Information Technology (MeitY), Government of
+India.
+
+\textbf{Conflict of interest.} The author declares no competing interests.
+
+\textbf{Ethics approval and consent to participate.} Not applicable.
+
+\textbf{Consent for publication.} Not applicable.
+
+\textbf{Data availability.} The raw measurement records that support the findings of this study (one JSON file per
+run with timestamps, bitstream hash, card identifiers and temperatures), the logical error rate records and the
+scripts that generate every table and figure from them are available from the corresponding author on reasonable
+request. The pretrained networks are available from NVIDIA under the NVIDIA Open Model License
+\cite{nvidia_fast_card,nvidia_accurate_card}.
+
+\textbf{Author contribution.} N.~Ali designed and implemented the integer model, the HLS kernel, the host runtime
+and the evaluation harness, carried out the measurements and wrote the manuscript.
+
+\bibliography{references}
+
+\end{document}

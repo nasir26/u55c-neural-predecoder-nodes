@@ -5,7 +5,7 @@ Author: Nasir Ali, C-DAC Noida.
   wmem    uint8 array of W_WORDS * PI bytes: word ((l * TAPS + tap) * CB_IN + cib) * C + o, byte i = weight of output
           channel o from input channel cib * PI + i at tap (dt, dy, dx) = (tap // 9, tap // 3 % 3, tap % 3) of layer l;
           channels that do not exist (layer 1 inputs >= 4, layer 4 outputs >= 4) are zero
-  params  int32: bias[LAYERS][C], mult[LAYERS - 1][C], thr[C_OUT], lut[LAYERS - 1][LUT_SIZE]
+  params  int32: bias[L][C], mult[L - 1][C], thr[C_OUT], lut[L - 1][LUT_SIZE] for a model of L = 4 or 6 layers
   x_in    uint8 per site: input channel k (value 0, 1 or 2) in bits 2k, 2k + 1
   bits    uint8 per site: output channel k in bit k
 """
@@ -30,7 +30,8 @@ CFG = read_config()
 
 
 def pack_model(qm) -> tuple[np.ndarray, np.ndarray]:
-    L, TAPS, C, PI, CB_IN = CFG["LAYERS"], CFG["TAPS"], CFG["C"], CFG["PI"], CFG["CB_IN"]
+    L, TAPS, C, PI, CB_IN = len(qm.layers), CFG["TAPS"], CFG["C"], CFG["PI"], CFG["CB_IN"]
+    assert L in (4, 6), "the kernel is built for 4 (model 1) or 6 (model 4) layers"
     W = np.zeros((L, TAPS, CB_IN, C, PI), dtype=np.int8)
     for l, layer in enumerate(qm.layers):
         w = layer.w                                         # (out, in, 3, 3, 3)

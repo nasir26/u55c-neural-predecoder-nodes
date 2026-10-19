@@ -1,0 +1,15 @@
+Neural pre-decoders remove local errors from the syndrome of a quantum error correcting code before a global decoder
+such as matching processes the remainder. We implement the two surface code pre-decoders that
+NVIDIA released with pretrained weights, four and six layer three dimensional convolutional networks, as integer
+networks on four AMD Alveo U55C FPGA cards, each card an independent node with two instances of one HLS kernel that
+runs both networks. The kernel uses 8 bit products, 32 bit accumulation and a table based GELU, keeps all activations
+on chip, and is bit exact with an integer model of the networks on every instance of every card. Measured with
+NVIDIA's evaluation code, the six layer network lowers the logical error rate of matching by a factor of
+\NumRatioAccFpThirteenHigh{} at physical error rate 0.006 and distance 13, as published, and the integer model by
+\NumRatioAccIntThirteenHigh{}, while the four layer network gives little or no gain at
+0.003. Four cards process \NumFourFast{} windows per second of the four layer network at distance 9 and
+\NumFourAcc{} of the six layer network at distance 13, with linear scaling and within two percent of the kernel schedule,
+but only \NumSpeedFast{} and \NumSpeedAcc{} times the same networks in PyTorch on
+a 256 thread host CPU. A single window takes \NumLatFast{} and \NumLatAcc{} milliseconds, no faster than on the CPU. The arithmetic per window shows
+that real time pre-decoding at microsecond syndrome cycles requires networks designed for hardware, while the cards
+offload batch evaluation from the host.

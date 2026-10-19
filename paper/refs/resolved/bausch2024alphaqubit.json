@@ -1,0 +1,87 @@
+{
+ "source": "crossref",
+ "doi": "10.1038/s41586-024-08148-8",
+ "title": "Learning high-accuracy error decoding for quantum processors",
+ "venue": "Nature",
+ "volume": "635",
+ "issue": "8040",
+ "pages": "834-840",
+ "year": 2024,
+ "authors": [
+  [
+   "Bausch",
+   "Johannes"
+  ],
+  [
+   "Senior",
+   "Andrew W."
+  ],
+  [
+   "Heras",
+   "Francisco J. H."
+  ],
+  [
+   "Edlich",
+   "Thomas"
+  ],
+  [
+   "Davies",
+   "Alex"
+  ],
+  [
+   "Newman",
+   "Michael"
+  ],
+  [
+   "Jones",
+   "Cody"
+  ],
+  [
+   "Satzinger",
+   "Kevin"
+  ],
+  [
+   "Niu",
+   "Murphy Yuezhen"
+  ],
+  [
+   "Blackwell",
+   "Sam"
+  ],
+  [
+   "Holland",
+   "George"
+  ],
+  [
+   "Kafri",
+   "Dvir"
+  ],
+  [
+   "Atalaya",
+   "Juan"
+  ],
+  [
+   "Gidney",
+   "Craig"
+  ],
+  [
+   "Hassabis",
+   "Demis"
+  ],
+  [
+   "Boixo",
+   "Sergio"
+  ],
+  [
+   "Neven",
+   "Hartmut"
+  ],
+  [
+   "Kohli",
+   "Pushmeet"
+  ]
+ ],
+ "type": "journal-article",
+ "publisher": "Springer Science and Business Media LLC",
+ "url": "https://doi.org/10.1038/s41586-024-08148-8"
+}

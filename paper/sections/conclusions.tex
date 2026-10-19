@@ -1,0 +1,14 @@
+\section{Conclusions}\label{sec:conclusions}
+
+We implemented the two released NVIDIA Ising surface code pre-decoders as one integer HLS kernel on four Alveo U55C
+cards, each card a node with two kernel instances. The kernel is bit exact with an integer model of the networks on
+every instance of every card, and the integer model is evaluated with NVIDIA's unmodified evaluation code. With that
+code we reproduce the published accuracy of both networks: the Accurate network lowers the logical error rate of
+PyMatching by a factor of \NumRatioAccFpThirteenHigh{} at $p=0.006$, $d=13$, while the Fast network gives little or no
+gain at $p=0.003$. Four cards process \NumFourFast{} windows per second of the Fast network at $d=9$ and \NumFourAcc{}
+of the Accurate network at $d=13$, with linear scaling over the cards and \NumModelEffFast{}\% and \NumModelEffAcc{}\%
+of the throughput predicted by the kernel schedule, but only \NumSpeedFast{} and \NumSpeedAcc{} times the throughput
+of the networks in PyTorch on the \NumCpuThreads{} thread host. The latency of a single window, \NumLatFast{}~ms and
+\NumLatAcc{}~ms, and the arithmetic the networks need per window show that real time pre-decoding at microsecond
+syndrome cycles requires networks designed for hardware rather than faster engines for the released ones. Smaller and
+incremental networks, larger engines, resident weights and quantization aware training are the next steps.

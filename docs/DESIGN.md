@@ -101,3 +101,33 @@ same engine they would take 39,366 and 78,732 cycles instead of about 4,900 each
 instance in total. They get their own small units in the dataflow: layer 1 adds the weight vectors of the few
 nonzero syndrome bits plus a precomputed geometry term (the geometry channels are the same for every window), and
 layer 4 reduces 128 channels to 4 with a 4 x 128 array, both running concurrently with the main engine.
+
+## Synthesis of the first kernels (2026-10-19)
+
+- Kernel v1 read 64 bias, multiplier and table entries per cycle from one parameter memory at layer dependent
+  addresses; HLS partitioned that memory 144 ways and did not finish scheduling the epilogue within 7000 s.
+- Kernel v2 copies each layer's epilogue parameters into per channel registers and tables before the sites stream;
+  bit exact in C simulation (d = 9 X and Z, d = 11). C synthesis in 138 s: estimated Fmax 370 MHz at a 300 MHz target;
+  one instance uses 850 DSP, 88,891 LUT, 104,992 FF, 41 BRAM_18K, 150 URAM (record: runs/logs/csynth_v2.txt).
+- Cycles per window from the loop structure (to be confirmed by cosimulation): 935,941 at d = 9, so 321 windows/s per
+  instance at 300 MHz and 2,564 on four cards with two instances each, against 1,359 for PyTorch on the 256 thread host
+  CPU. Possible next steps: a dedicated last layer unit (layer 4 takes 18.9 % of the cycles while using 4 of 64
+  outputs) and two INT8 products per DSP block.
+
+## Kernel v3 and the hardware build (2026-10-19)
+
+- The layer count is a launch argument (4 or 6); weight and parameter memories are sized for six layers, so one
+  bitstream runs model 1 (Fast) and model 4 (Accurate). C simulation bit exact for both (tests/test_kernel_csim.py).
+  HLS estimate (runs/logs/csynth_v3.log, results/hls/ in the public tree): Fmax 370 MHz.
+- Two instances in SLR1 and SLR2 (build/build_hw.sh). After post route physical optimization the worst negative
+  slack is -0.013 ns at 300 MHz and Vitis scales the kernel clock to 298 MHz (build/hw/reports/). Routed, one instance
+  uses 1,296 DSP, 38,496 LUT, 50,553 FF, 269 BRAM, 114 URAM: implementation moved products to DSP blocks and part of
+  the memories to BRAM relative to the HLS estimate.
+- Card campaign (bench/campaign.sh, record results/hw/cards_20261019_2040.json in the public tree): all instances of all four cards bit
+  exact with the integer model for both networks; Fast at d = 9 623 windows/s per card and 2,490 on four, Accurate at
+  d = 13 127 per card and 509 on four, 98 % and 99 % of the cycle model (the dedicated layer units of the sizing
+  section were not built; the cycle model of paper/scripts/make_numbers.py describes the single engine kernel).
+  Latency of one window with one launch in flight: 3.77 ms and 16.56 ms, about 0.6 and 1.1 ms above the computation.
+- Real time use at microsecond syndrome cycles would need one d = 9 window every 9 us per logical qubit, about
+  74e12 multiply accumulates per second for the Fast network, more than ten times the peak of one card; see the
+  discussion of the manuscript.

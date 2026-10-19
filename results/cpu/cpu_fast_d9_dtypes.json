@@ -1,0 +1,48 @@
+{
+ "d": 9,
+ "t": 9,
+ "threads": 256,
+ "torch": "2.14.1+cpu",
+ "rows": [
+  {
+   "dtype": "float32",
+   "batch": 1,
+   "windows_per_s": 47.117226454123454
+  },
+  {
+   "dtype": "float32",
+   "batch": 16,
+   "windows_per_s": 1358.6130536528249
+  },
+  {
+   "dtype": "float32",
+   "batch": 64,
+   "windows_per_s": 935.6859940250004
+  },
+  {
+   "dtype": "float32",
+   "batch": 256,
+   "windows_per_s": 751.4328944375599
+  },
+  {
+   "dtype": "bfloat16",
+   "batch": 1,
+   "windows_per_s": 1.9963075772199612
+  },
+  {
+   "dtype": "bfloat16",
+   "batch": 16,
+   "windows_per_s": 1.9936516657640853
+  },
+  {
+   "dtype": "bfloat16",
+   "batch": 64,
+   "windows_per_s": 7.954126469921466
+  },
+  {
+   "dtype": "bfloat16",
+   "batch": 256,
+   "windows_per_s": 24.03338485984678
+  }
+ ]
+}

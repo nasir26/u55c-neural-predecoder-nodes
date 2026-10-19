@@ -1,0 +1,59 @@
+{
+ "source": "crossref",
+ "doi": "10.1088/1748-0221/13/07/p07027",
+ "title": "Fast inference of deep neural networks in FPGAs for particle physics",
+ "venue": "Journal of Instrumentation",
+ "volume": "13",
+ "issue": "07",
+ "pages": "P07027-P07027",
+ "year": 2018,
+ "authors": [
+  [
+   "Duarte",
+   "J."
+  ],
+  [
+   "Han",
+   "S."
+  ],
+  [
+   "Harris",
+   "P."
+  ],
+  [
+   "Jindariani",
+   "S."
+  ],
+  [
+   "Kreinar",
+   "E."
+  ],
+  [
+   "Kreis",
+   "B."
+  ],
+  [
+   "Ngadiuba",
+   "J."
+  ],
+  [
+   "Pierini",
+   "M."
+  ],
+  [
+   "Rivera",
+   "R."
+  ],
+  [
+   "Tran",
+   "N."
+  ],
+  [
+   "Wu",
+   "Z."
+  ]
+ ],
+ "type": "journal-article",
+ "publisher": "IOP Publishing",
+ "url": "https://doi.org/10.1088/1748-0221/13/07/p07027"
+}

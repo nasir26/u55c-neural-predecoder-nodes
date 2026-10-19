@@ -2,49 +2,49 @@
 
 [![tests](https://github.com/nasir26/u55c-neural-predecoder-nodes/actions/workflows/tests.yml/badge.svg)](https://github.com/nasir26/u55c-neural-predecoder-nodes/actions/workflows/tests.yml)
 
-An FPGA implementation of NVIDIA's convolutional pre-decoder for the rotated surface code (Ising Decoder, model 1
-"Fast", Chamberland et al., arXiv:2604.12841), in 8 bit integer arithmetic, for four AMD Alveo U55C cards used as
-independent compute nodes. The pre-decoder removes most local error chains from a syndrome window; PyMatching
-decodes what is left. The goal is the highest window throughput on four cards first, then the lowest latency per
-window.
+Code, raw measurement records and manuscript sources of "Neural Pre-Decoding for the Surface Code on Four FPGA Nodes:
+Integer Inference of Convolutional Pre-Decoders on Alveo U55C Accelerators" (Nasir Ali, C-DAC Noida).
 
-**Status: work in progress.** The integer model, the HLS kernel and its C simulation, the host runtime and the
-evaluation harness are complete and tested. HLS synthesis of the first kernel, the hardware builds and the card
-measurements are not yet done; no FPGA number is reported here until it has been measured.
+The two surface code pre-decoders that NVIDIA released with pretrained weights (Ising Decoder, Chamberland et al.,
+arXiv:2604.12841): model 1 "Fast" (four 3D convolution layers, 4 to 128 to 128 to 128 to 4 channels) and model 4
+"Accurate" (six layers, 128 hidden channels), run as 8 bit integer networks on four AMD Alveo U55C cards. Each card is
+an independent node with two instances of one HLS kernel; the layer count is a launch argument, so one bitstream runs
+both networks. A pre-decoder removes local error chains from a syndrome window; PyMatching decodes what is left.
 
-## What is verified so far
+## Results
+
+All numbers below are produced by `paper/scripts/make_numbers.py` from the records in `results/` and `build/hw/`.
 
 | Item | Result | Record |
 |---|---|---|
-| NVIDIA pipeline on the host CPU, d = 9, 9 rounds, 65,536 shots per basis | logical error rate 1.312e-3 with PyMatching alone, 1.282e-3 after the pre-decoder (average of X and Z) | `results/logs/nvidia_fast_d9_65536.log` |
-| INT8 model, fast path against its reference integer path; weight, multiplier and table ranges | bit identical; all invariants hold | `tests/test_qmodel.py` |
-| INT8 network through NVIDIA's evaluation, d = 9, 65,536 shots per basis, 2,048 calibration windows | 154 logical errors after the pre-decoder, 154 with PyMatching alone on the same shots (X 88 against 70, Z 66 against 84); standard error about 1.3e-4 per rate | `results/ler/int8_d9_65536.json` |
-| HLS kernel (C simulation) against the INT8 model | bit identical at d = 9 (X and Z basis) and d = 11 | `tests/test_kernel_csim.py` |
-| FP32 network through NVIDIA's evaluation, d = 13, 13 rounds, 32,768 shots per basis | 22 logical errors after the pre-decoder, 9 with PyMatching alone on the same shots (X 14 against 7, Z 8 against 2); contrary to NVIDIA's reported trend, the configuration at d = 13 is being checked | `results/ler/fp32_d13_32768.json` |
-| Same network on the host CPU, PyTorch float32, 256 threads, d = 9 | 1,359 windows per second at batch 16; 47 per second at batch 1 | `bench/cpu_torch_d9.json` |
-
-At d = 9 the effect of the pre-decoder on the logical error rate is within the statistical error, for the FP16 and
-the INT8 network alike (the two runs drew different syndrome samples). NVIDIA reports larger gains at larger
-distances; the first run at d = 13 shows the opposite (table above) and is being checked against NVIDIA's own
-inference configuration before any conclusion. The agreement of INT8 and FP16 decisions on the same windows is
-measured next.
+| Bitstream | two instances (SLR1, SLR2); worst negative slack -0.013 ns at 300 MHz after post route physical optimization, kernel clock scaled by Vitis to 298 MHz | `build/hw/reports/`, `build/hw/predecoder.xclbin.info` |
+| Bit exactness on the cards | output bits of both instances of all four cards equal the integer model, for both networks (8 of 8 checks) | `results/hw/cards_20261019_2040.json` |
+| Throughput, Fast, d = 9, 9 rounds | 623 windows/s on one card, 1,245 on two, 2,490 on four; 98% of the cycle model of the kernel | same |
+| Throughput, Accurate, d = 13, 13 rounds | 127 windows/s on one card, 255 on two, 509 on four; 99% of the cycle model | same |
+| Latency, one window, one launch in flight | 3.77 ms (Fast, d = 9), 16.56 ms (Accurate, d = 13), including transfers | same |
+| Logical error rates through NVIDIA's evaluation code (X basis factor, ours against NVIDIA's published) | Fast: 1.08 / 1.10 (p = 0.003, d = 9), 0.90 / 0.91 (p = 0.003, d = 13), 1.17 / 1.24 (p = 0.006, d = 9); Accurate, d = 13: 1.29 / 1.32 (p = 0.003), 1.72 / 1.76 (p = 0.006) | `results/ler/`, `paper/generated/tab_ler.tex` |
+| Integer (INT8) model | keeps the gain of the Fast network (1.17 against 1.18 over both bases, p = 0.006, d = 9) and about two thirds of that of the Accurate network (1.48 against 1.72, p = 0.006, d = 13) | `results/ler/*int8*` |
+| CPU baseline, PyTorch float32, 32 to 256 threads, best of two repetitions | Fast, d = 9: 2,038 windows/s (64 threads, batch 16), 3.89 ms per window at batch 1; Accurate, d = 13: 318 windows/s, 8.77 ms at batch 1. Four cards are 1.2 and 1.6 times faster; one card is slower than the host | `results/cpu/` |
 
 ## Layout
 
 | Path | Content |
 |---|---|
 | `harness/nvidia_bridge.py` | NVIDIA's configuration, syndrome windows and evaluation, used unchanged |
-| `harness/eval_ler.py` | logical error rate of the FP16, FP32 or INT8 network through NVIDIA's evaluation |
+| `harness/eval_ler.py` | logical error rate of the FP16, FP32 or INT8 network through NVIDIA's evaluation, at any physical error rate (`--p`) |
 | `model/qmodel.py` | INT8 model: per channel weights, int32 accumulation, integer requantization, GELU table, integer threshold |
 | `model/make_random_checkpoint.py` | random stand-in for model 1 (fixed seed), for tests without the gated weights |
 | `host/pack.py` | weight, parameter and window layouts of the kernel |
-| `host/xrt_predecoder.cpp` | XRT runtime: all kernel instances of one card, two launches in flight each, start barrier for multi card runs |
-| `hls/predecoder.cpp` | HLS kernel: one convolution engine, 16 input by 64 output channels per cycle, activations on chip |
-| `hls/tb_predecoder.cpp`, `hls/synth/run_hls.tcl` | C simulation and cosimulation testbench; C synthesis script |
-| `tests/` | integer model and kernel C simulation tests |
-| `bench/` | CPU throughput of the same network |
-| `docs/DESIGN.md` | design notes: compute budget, kernel sizing, four card schemes, verification ladder |
-| `results/` | raw records of the measurements above |
+| `host/xrt_predecoder.cpp` | XRT runtime: both kernel instances of one card, two launches in flight each, start barrier for multi card runs |
+| `hls/predecoder.cpp` | HLS kernel: one convolution engine, 16 input by 64 output channels per cycle, four or six layers, activations on chip |
+| `hls/tb_predecoder.cpp`, `hls/synth/run_hls.tcl` | C simulation testbench; C synthesis script |
+| `build/build_hw.sh` | v++ build of the two instance bitstream; `build/hw/` holds its configuration, source snapshot and routed reports |
+| `bench/run_cards.py`, `bench/campaign.sh` | card campaign: bit exact checks, throughput on 1, 2 and 4 cards, latency |
+| `bench/cpu_torch_throughput.py` | CPU baseline |
+| `tests/` | integer model and kernel C simulation tests (both networks) |
+| `results/` | raw records: `ler/`, `hw/`, `cpu/`, `hls/`, `logs/`, `host_platform.json` |
+| `paper/` | manuscript sources; `paper/scripts/` regenerates every number, table and figure from `results/` and `build/hw/` |
+| `docs/DESIGN.md` | design notes |
 
 ## Setup
 
@@ -56,10 +56,10 @@ pytest -v -rs                               # kernel tests need the Vitis HLS he
 ```
 
 The pretrained weights are gated by NVIDIA (NVIDIA Open Model License) and are not part of this repository. After
-accepting the licence on Hugging Face (`nvidia/Ising-Decoder-SurfaceCode-1-Fast`):
+accepting the licence on Hugging Face (`nvidia/Ising-Decoder-SurfaceCode-1-Fast`, `nvidia/Ising-Decoder-SurfaceCode-1-Accurate`):
 
 ```
-HF_TOKEN=<your token> scripts/fetch_weights.sh   # downloads into runs/models/nvidia and checks the SHA256
+HF_TOKEN=<your token> scripts/fetch_weights.sh   # both networks, into runs/models/nvidia, SHA256 checked
 ```
 
 Environment variables: `ISING_DECODING_DIR` (NVIDIA's code, default `third_party/Ising-Decoding`), `NPD_RUNS`
@@ -67,12 +67,30 @@ Environment variables: `ISING_DECODING_DIR` (NVIDIA's code, default `third_party
 
 ## Reproducing the results
 
+Tables and figures from the stored records (no FPGA needed):
+
 ```
-W=runs/models/nvidia/ising_decoder_surface_code_1_fast_r9_v1.0.77_fp16.safetensors
-python harness/eval_ler.py --checkpoint $W --variant fp16 --d 9 --t 9 --shots 65536 --out runs/ler/fp16_d9.json
-python harness/eval_ler.py --checkpoint $W --variant int8 --d 9 --t 9 --shots 65536 --cal-windows 2048 --out runs/ler/int8_d9.json
-python bench/cpu_torch_throughput.py
-cd hls/synth && vitis_hls -f run_hls.tcl            # C synthesis, xcu55c, 300 MHz target
+cd paper && python scripts/make_numbers.py && python scripts/make_figures.py && latexmk -pdf main.tex
+```
+
+Logical error rates (one run per row of the table; `--p` sets the physical error rate):
+
+```
+F=runs/models/nvidia/ising_decoder_surface_code_1_fast_r9_v1.0.77_fp16.safetensors
+A=runs/models/nvidia/ising_decoder_surface_code_1_accurate_r13_v1.0.86_fp16.safetensors
+python harness/eval_ler.py --checkpoint $F --variant fp32 --d 9 --t 9 --p 0.006 --shots 1048576 --out runs/ler/fp32_d9_p006.json
+python harness/eval_ler.py --checkpoint $A --variant fp32 --d 13 --t 13 --p 0.006 --shots 262144 --out runs/ler/acc_fp32_d13_p006.json
+python harness/eval_ler.py --checkpoint $A --variant int8 --d 13 --t 13 --p 0.006 --shots 65536 --out runs/ler/acc_int8_d13_p006.json
+```
+
+Bitstream and card measurements (Vitis 2023.2, XRT 2.16, platform `xilinx_u55c_gen3x16_xdma_3_202210_1`):
+
+```
+scripts/fetch_bitstreams.sh                        # bitstream from the release bitstreams-v1, SHA256 checked
+# or rebuild it: build/build_hw.sh (multi hour Vivado run)
+mkdir -p runs/bin && g++ -std=c++17 -O2 -Wall -I$XILINX_XRT/include -o runs/bin/xrt_predecoder host/xrt_predecoder.cpp \
+    -L$XILINX_XRT/lib -lxrt_coreutil -luuid -pthread
+bench/campaign.sh                                  # bit exact checks, throughput on 1, 2 and 4 cards, latency, CPU baseline
 ```
 
 NVIDIA's pipeline runs on the CPU here with `torch.compile` disabled (`TORCHDYNAMO_DISABLE=1`); eager execution

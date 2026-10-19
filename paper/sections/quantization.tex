@@ -1,0 +1,32 @@
+\section{Integer model}\label{sec:quant}
+
+The FPGA kernel computes an integer model of the network, defined in software first so that it can be judged by
+NVIDIA's evaluation and so that the kernel can be checked against it bit for bit.
+
+\textbf{Inputs.} Multiplying the input tensor by two maps every entry to $\{0,1,2\}$, so the input is exact in
+integers with scale $\tfrac12$; a site of the window needs two bits per channel, eight bits for its four channels.
+
+\textbf{Weights.} The weights of each output channel are scaled to integers in $[-127,127]$ with a per channel scale, the
+largest absolute weight of the channel divided by 127
+\cite{jacob2018quantization}, and the biases are rounded to 32 bit integers at the scale of the accumulator, so that a
+layer computes $a_o = b_o + \sum_{i,\tau} w_{o i \tau}\, x_{i}(\text{site}+\tau)$ exactly in a 32 bit accumulator over
+the 27 kernel offsets $\tau$ and the input channels $i$.
+
+\textbf{Requantization and activation.} For a hidden layer, the accumulator is mapped to an 8 bit index
+\begin{equation}
+q_o = \operatorname{clamp}\bigl(\lfloor (a_o M_o + 2^{23}) / 2^{24} \rfloor,\, -128,\, 127\bigr),
+\end{equation}
+with a per channel integer multiplier $M_o$, and the activation of the next layer is $g[q_o]$, a 256 entry table of
+signed 8 bit values that holds the GELU of the dequantized index at the scale of the next layer. The multipliers and
+the table scales come from calibration: the 99.99th percentile of the absolute values of each layer's floating point pre-activations on
+syndrome windows of NVIDIA's inference pipeline sets the range of the index, and the same percentile of the
+activations sets the scale of the table output.
+
+\textbf{Decision.} The last layer needs no requantization: a logit is at or above the threshold exactly when the
+accumulator is at or above the threshold divided by the accumulator scale, rounded up, so the kernel compares the
+32 bit accumulator with an integer threshold per output channel and emits one bit.
+
+\textbf{Reference implementations.} The integer model has a direct implementation in NumPy and a fast one that
+evaluates the convolutions in double precision, which represents every 32 bit accumulator exactly; the two agree bit
+for bit. The fast path supplies the network inside NVIDIA's evaluation module, in place of the floating point network,
+to obtain the logical error rate of the integer model.

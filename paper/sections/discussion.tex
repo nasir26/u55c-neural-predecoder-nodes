@@ -1,0 +1,43 @@
+\section{Discussion}\label{sec:discussion}
+
+\textbf{Distance to real time decoding.} A superconducting device produces a syndrome round about every microsecond
+\cite{google2025below}. To keep up with one logical qubit, a pre-decoder that consumes windows of $T=d$ rounds must
+finish at least one window every $d$ microseconds: \NumRealTimeWpsFast{} windows per second for the Fast network at
+$d=9$ and \NumRealTimeWpsAcc{} for the Accurate network at $d=13$. Because the work per window is fixed, this asks for
+\NumRealTimeTmacFast{}$\times10^{12}$ and \NumRealTimeTmacAcc{}$\times10^{12}$ multiply accumulate operations per
+second. Four cards deliver \NumTmacFast{}$\times10^{12}$ and \NumTmacAcc{}$\times10^{12}$, and even if every one of the
+9{,}024 DSP blocks of a U55C \cite{amd_ds978} performed two 8 bit products per cycle at 300~MHz, one card would reach
+\NumDevicePeakTmac{}$\times10^{12}$. The released networks evaluated densely on full windows therefore need more than ten
+times the peak arithmetic of a card of this class for real time use, independently of how well the engine is
+scheduled; our kernel already reaches \NumModelEffFast{}\% and \NumModelEffAcc{}\% of the rate its schedule allows. The
+measured latency of \NumLatFast{}~ms per window leads to the same conclusion. Real time pre-decoding in hardware
+therefore needs networks designed for it: fewer channels, fewer layers, or sliding windows that reuse the results of
+earlier rounds instead of recomputing a full window, and possibly the sparsity of the syndrome, which in our kernel
+only the first layer could exploit because the hidden activations after GELU are dense. On platforms with millisecond
+syndrome cycles, a CPU already decodes in real time \cite{ye2026megaquop}, and a pre-decoder is not needed for speed.
+
+\textbf{What the cards are useful for.} The design is a throughput engine. Evaluating a pre-decoder on many shots, as
+in Table~\ref{tab:ler}, and generating pre-decoded syndromes for decoder studies are batch tasks of independent windows,
+which spread over the cards without communication and scale linearly with their number. For these tasks, however,
+the advantage of the cards over the host is small: four cards are \NumSpeedFast{} (Fast) and \NumSpeedAcc{}
+(Accurate) times faster than PyTorch on the two socket, 128 core host at its best thread count and batch size, so the
+host matches \NumHostCardsFast{} cards for the Fast network and \NumHostCardsAcc{} for the Accurate network, and for a single window the CPU is as fast (Fast) or faster (Accurate). What the cards
+offer is that the work leaves the host, whose cores then remain free for the matching decoder, and an integer output
+known to be bit exact. The CPU baseline is the floating point network in PyTorch, the form in which the networks are
+released; an optimized integer CPU implementation could close or reverse the remaining gap, and we did not measure GPUs
+or the power of either platform. The per card throughput is limited by the single engine of 1{,}024 products per cycle
+per instance, which uses less than half of the DSP blocks of an SLR (Table~\ref{tab:resources}); a larger engine or
+two products per DSP block would raise it, but not by the factor that real time use needs.
+
+\textbf{Accuracy of the integer model.} The integer model keeps the gain of the Fast network and about two thirds of
+that of the Accurate network: the Fast network at $p=0.006$, $d=9$ gives \NumRatioFastIntNineHigh{} against \NumRatioFastFpNineHigh{}, and the Accurate
+network at $p=0.006$, $d=13$ gives \NumRatioAccIntThirteenHigh{} against \NumRatioAccFpThirteenHigh{}, both over both
+bases. Calibration uses windows of both bases at the noise level of the evaluation and no retraining; quantization aware
+training could recover the remainder.
+
+\textbf{Limits of this study.} The kernel holds windows up to $13\times13\times13$ sites and the two released surface
+code networks; larger windows need tiling of the activation buffers. Every launch reloads the weights from HBM, which
+costs little in throughput but adds to the latency of a single window; a kernel that keeps the weights resident between
+launches would remove that part. Logical error rates are measured for memory experiments under NVIDIA's circuit level
+noise model at two noise levels, with the number of shots given in Table~\ref{tab:ler}; the smallest counts, at
+$p=0.003$, carry a relative statistical uncertainty of up to about ten percent.

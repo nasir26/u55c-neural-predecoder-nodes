@@ -1,0 +1,26 @@
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=1024, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0040, Z:0.0040], meas=[X:0.0040, Z:0.0040], idle_cnot=[X:0.0020, Y:0.0020, Z:0.0020], idle_spam=[X:0.0040, Y:0.0040, Z:0.0040], cnot_total=0.0060)
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=1024, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=Z, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0040, Z:0.0040], meas=[X:0.0040, Z:0.0040], idle_cnot=[X:0.0020, Y:0.0020, Z:0.0020], idle_spam=[X:0.0040, Y:0.0040, Z:0.0040], cnot_total=0.0060)
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=65536, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=X, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0040, Z:0.0040], meas=[X:0.0040, Z:0.0040], idle_cnot=[X:0.0020, Y:0.0020, Z:0.0020], idle_spam=[X:0.0040, Y:0.0040, Z:0.0040], cnot_total=0.0060)
+[DEM Timing] build=0.03s decode=2.68s (basis=X, batches=32)
+[LER Config] ONNX_WORKFLOW=torch-only | torch.compile=on | channels_last_3d=on | prefetcher=off(cpu) | timing=off
+Creating Stim inference datapipe: d=9, n_rounds=9, num_samples=65536, error_mode=circuit_level_surface_custom, test.noise_model=train, p_error=0.006, measure_basis=Z, code_rotation=XV
+[Inference] Using explicit noise_model (25p): NoiseModel(prep=[X:0.0040, Z:0.0040], meas=[X:0.0040, Z:0.0040], idle_cnot=[X:0.0020, Y:0.0020, Z:0.0020], idle_spam=[X:0.0040, Y:0.0040, Z:0.0040], cnot_total=0.0060)
+[DEM Timing] build=0.03s decode=2.65s (basis=Z, batches=32)
+{
+ "X": {
+  "logical error ratio (mean)": 0.0264892578125,
+  "logical error ratio (standard error)": 0.000627285579604833,
+  "logical error ratio (pymatch mean)": 0.03009033203125,
+  "logical error ratio (pymatch standard error)": 0.0006673277254653296
+ },
+ "Z": {
+  "logical error ratio (mean)": 0.0241241455078125,
+  "logical error ratio (standard error)": 0.0005993538379463934,
+  "logical error ratio (pymatch mean)": 0.0292205810546875,
+  "logical error ratio (pymatch standard error)": 0.0006579073507542086
+ }
+}

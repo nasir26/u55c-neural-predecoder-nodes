@@ -1,0 +1,295 @@
+{
+ "checkpoint": "ising_decoder_surface_code_1_accurate_r13_v1.0.86_fp16.safetensors",
+ "d": 13,
+ "t": 13,
+ "threads": [
+  32,
+  64,
+  128,
+  256
+ ],
+ "cpu_count": 256,
+ "torch": "2.14.1+cpu",
+ "rows": [
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 0,
+   "batch": 1,
+   "windows_per_s": 83.86980846681695
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 0,
+   "batch": 4,
+   "windows_per_s": 127.74679209226761
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 0,
+   "batch": 16,
+   "windows_per_s": 160.61657439109194
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 0,
+   "batch": 64,
+   "windows_per_s": 104.92512709162672
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 0,
+   "batch": 256,
+   "windows_per_s": 109.06242369648989
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 1,
+   "batch": 1,
+   "windows_per_s": 83.10778390699767
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 1,
+   "batch": 4,
+   "windows_per_s": 139.67303243071729
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 1,
+   "batch": 16,
+   "windows_per_s": 132.83167239214882
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 1,
+   "batch": 64,
+   "windows_per_s": 105.04958391532404
+  },
+  {
+   "dtype": "float32",
+   "threads": 32,
+   "rep": 1,
+   "batch": 256,
+   "windows_per_s": 112.85657989432768
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 0,
+   "batch": 1,
+   "windows_per_s": 103.99868942466223
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 0,
+   "batch": 4,
+   "windows_per_s": 221.08423095270146
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 0,
+   "batch": 16,
+   "windows_per_s": 165.94246620737545
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 0,
+   "batch": 64,
+   "windows_per_s": 140.1711033237378
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 0,
+   "batch": 256,
+   "windows_per_s": 154.77923381692258
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 1,
+   "batch": 1,
+   "windows_per_s": 109.29395328825797
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 1,
+   "batch": 4,
+   "windows_per_s": 221.06181051815162
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 1,
+   "batch": 16,
+   "windows_per_s": 160.09623599798385
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 1,
+   "batch": 64,
+   "windows_per_s": 142.23914824931038
+  },
+  {
+   "dtype": "float32",
+   "threads": 64,
+   "rep": 1,
+   "batch": 256,
+   "windows_per_s": 156.3870651266364
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 0,
+   "batch": 1,
+   "windows_per_s": 88.97165473659558
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 0,
+   "batch": 4,
+   "windows_per_s": 160.16378955445032
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 0,
+   "batch": 16,
+   "windows_per_s": 159.6882570291278
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 0,
+   "batch": 64,
+   "windows_per_s": 140.04394010935133
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 0,
+   "batch": 256,
+   "windows_per_s": 169.80114894070394
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 1,
+   "batch": 1,
+   "windows_per_s": 114.05126853581964
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 1,
+   "batch": 4,
+   "windows_per_s": 171.979788360737
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 1,
+   "batch": 16,
+   "windows_per_s": 169.39272602725708
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 1,
+   "batch": 64,
+   "windows_per_s": 143.28023173681643
+  },
+  {
+   "dtype": "float32",
+   "threads": 128,
+   "rep": 1,
+   "batch": 256,
+   "windows_per_s": 175.68649168914015
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 0,
+   "batch": 1,
+   "windows_per_s": 67.75994075002825
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 0,
+   "batch": 4,
+   "windows_per_s": 134.69367053289545
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 0,
+   "batch": 16,
+   "windows_per_s": 153.02045014535435
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 0,
+   "batch": 64,
+   "windows_per_s": 137.55326776542827
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 0,
+   "batch": 256,
+   "windows_per_s": 189.60415420415865
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 1,
+   "batch": 1,
+   "windows_per_s": 80.53623365856365
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 1,
+   "batch": 4,
+   "windows_per_s": 146.05780483083194
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 1,
+   "batch": 16,
+   "windows_per_s": 318.214901687799
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 1,
+   "batch": 64,
+   "windows_per_s": 131.92401105937813
+  },
+  {
+   "dtype": "float32",
+   "threads": 256,
+   "rep": 1,
+   "batch": 256,
+   "windows_per_s": 182.371148839721
+  }
+ ]
+}
